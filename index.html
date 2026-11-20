@@ -1,0 +1,2161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>UniPlan – Plan. Learn. Achieve.</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  --navy:#1e3a8a;
+  --blue:#e0edff;
+  --blue-soft:#eff6ff;
+  --lav:#e8f1ff;
+  --bg:#f4f8fd;
+  --card:#ffffff;
+  --ink:#0f172a;
+  --mute:#475569;
+  --line:rgba(148,163,184,0.18);
+  --acc:#2563eb;
+  --acc-hover:#1d4ed8;
+  --ok:#059669;
+  --red:#dc2626;
+  --orange:#d97706;
+  --shadow:0 10px 30px -10px rgba(37,99,235,0.08), 0 2px 8px -2px rgba(15,23,42,0.04);
+  --shadow-lift:0 18px 38px -12px rgba(37,99,235,0.16), 0 4px 12px -2px rgba(15,23,42,0.05);
+  --nav-bg:rgba(255,255,255,0.88);
+  --ease:cubic-bezier(0.22, 1, 0.36, 1);
+  box-sizing:border-box;
+  color-scheme:light;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:calc(5.5rem + env(safe-area-inset-top,0px))}
+html,body{margin:0;padding:0;overflow-x:hidden}
+body{
+  font:15.5px/1.6 Lexend,system-ui,-apple-system,sans-serif;
+  background:radial-gradient(circle at 12% 0%, var(--blue-soft) 0%, var(--bg) 52%);
+  background-attachment:fixed;
+  color:var(--ink);
+  min-height:100vh;
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+
+/* ---------- Buttons & Inputs ---------- */
+.btn{
+  background:var(--acc);
+  color:#fff;
+  border:0;
+  border-radius:99px;
+  padding:.6rem 1.25rem;
+  cursor:pointer;
+  font-weight:500;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:.4rem;
+  text-decoration:none;
+  white-space:nowrap;
+  word-break:normal;
+  transition:background-color .22s var(--ease), color .22s var(--ease), transform .22s var(--ease), box-shadow .22s var(--ease), border-color .22s var(--ease);
+}
+.btn:hover{background:var(--acc-hover);transform:translateY(-1px);box-shadow:0 6px 18px -6px rgba(37,99,235,0.45)}
+.btn:active{transform:translateY(0)}
+.btn.ghost{background:var(--blue-soft);color:var(--ink);border:1px solid var(--line)}
+.btn.ghost:hover{background:var(--blue);box-shadow:0 4px 12px -4px rgba(37,99,235,0.18)}
+.btn.out{background:var(--card);border:1px solid var(--line);color:var(--ink)}
+.btn.out:hover{border-color:var(--acc);background:var(--blue-soft)}
+.btn.pill{border-radius:99px;padding:.65rem 1.35rem}
+
+input,select,textarea{
+  width:100%;
+  padding:.7rem .95rem;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:var(--bg);
+  margin:.3rem 0 .9rem;
+  transition:border-color .22s var(--ease), background-color .22s var(--ease), box-shadow .22s var(--ease);
+}
+input:focus,select:focus,textarea:focus{
+  background:var(--card);
+  border-color:var(--acc);
+  box-shadow:0 0 0 4px color-mix(in srgb,var(--acc) 14%,transparent);
+  outline:none;
+}
+label{font-size:.88rem;font-weight:500;color:var(--mute)}
+
+/* ---------- Cards & Soft Hover Lift ---------- */
+.card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:24px;
+  padding:1.45rem;
+  margin-bottom:1.25rem;
+  box-shadow:var(--shadow);
+  transition:transform .28s var(--ease), box-shadow .28s var(--ease), border-color .28s var(--ease);
+}
+.lift-card:hover, a.stat:hover{
+  transform:translateY(-4px);
+  box-shadow:var(--shadow-lift);
+  border-color:color-mix(in srgb,var(--acc) 30%,transparent);
+}
+
+.grid{display:grid;gap:1.25rem;grid-template-columns:repeat(auto-fit,minmax(min(100%, 280px),1fr))}
+h1{font-size:1.85rem;font-weight:700;letter-spacing:-0.02em;margin:0 0 .35rem}
+h2{font-size:1.12rem;font-weight:600;letter-spacing:-0.01em;margin:0 0 .65rem}
+p{margin:.25rem 0}
+.mute{color:var(--mute);font-size:.9rem}
+.tag{
+  display:inline-flex;
+  align-items:center;
+  background:var(--blue-soft);
+  color:var(--acc);
+  border:1px solid color-mix(in srgb,var(--acc) 18%,transparent);
+  border-radius:99px;
+  padding:.2rem .8rem;
+  font-size:.78rem;
+  font-weight:500;
+  white-space:nowrap;
+  word-break:normal;
+  max-width:100%;
+}
+.tag.red{background:color-mix(in srgb,var(--red) 12%,transparent);color:var(--red);border-color:color-mix(in srgb,var(--red) 25%,transparent)}
+.tag.orange{background:color-mix(in srgb,var(--orange) 12%,transparent);color:var(--orange);border-color:color-mix(in srgb,var(--orange) 25%,transparent)}
+
+/* ---------- Auth Screen ---------- */
+#auth{max-width:440px;margin:8vh auto;padding:2rem;border-radius:28px}
+.tabs{display:flex;gap:.5rem;margin:1.1rem 0;background:var(--bg);padding:.3rem;border-radius:99px}
+.tabs button{flex:1;box-shadow:none}
+
+/* ---------- Floating Rounded Auto-Hide Navigation Bar ---------- */
+.float-nav-wrap{
+  position:fixed;
+  top:calc(.75rem + env(safe-area-inset-top,0px));
+  left:50%;
+  transform:translate(-50%, 0);
+  width:min(1240px, calc(100% - 1.5rem));
+  z-index:50;
+  transition:transform .38s var(--ease), opacity .32s var(--ease);
+  will-change:transform, opacity;
+}
+.float-nav-wrap.nav-hidden{
+  transform:translate(-50%, -155%);
+  opacity:0;
+  pointer-events:none;
+}
+.float-nav-wrap:focus-within{
+  transform:translate(-50%, 0) !important;
+  opacity:1 !important;
+  pointer-events:auto !important;
+}
+.float-nav{
+  display:flex;
+  align-items:center;
+  gap:.4rem;
+  background:var(--nav-bg);
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+  border:1px solid var(--line);
+  border-radius:99px;
+  padding:.45rem .65rem;
+  box-shadow:0 12px 34px -8px rgba(37,99,235,0.14), 0 2px 6px rgba(15,23,42,0.04);
+}
+.nav-brand{
+  display:flex;
+  align-items:center;
+  gap:.45rem;
+  font-weight:700;
+  font-size:1.05rem;
+  color:var(--acc);
+  text-decoration:none;
+  padding:.4rem .85rem;
+  border-radius:99px;
+  white-space:nowrap;
+}
+.nav-links{
+  display:flex;
+  align-items:center;
+  gap:.25rem;
+  overflow-x:auto;
+  scrollbar-width:none;
+  -webkit-overflow-scrolling:touch;
+  flex:1;
+  min-width:0;
+}
+.nav-links::-webkit-scrollbar{display:none}
+.nav-links a{
+  color:var(--mute);
+  text-decoration:none;
+  padding:.48rem .78rem;
+  border-radius:99px;
+  font-size:.88rem;
+  font-weight:500;
+  display:inline-flex;
+  align-items:center;
+  gap:.42rem;
+  white-space:nowrap;
+  flex:0 0 auto;
+  transition:background-color .22s var(--ease), color .22s var(--ease), transform .22s var(--ease);
+}
+.nav-links a:hover{color:var(--ink);background:var(--blue-soft)}
+.nav-links a.on{
+  background:var(--acc);
+  color:#fff;
+  box-shadow:0 4px 12px -3px rgba(37,99,235,0.4);
+}
+.nav-links .badge{
+  background:var(--red);
+  color:#fff;
+  border-radius:99px;
+  font-size:.7rem;
+  padding:.02rem .45rem;
+  font-weight:600;
+}
+.nav-actions{
+  display:flex;
+  align-items:center;
+  gap:.45rem;
+  flex:none;
+}
+.avatar{
+  width:2.2rem;
+  height:2.2rem;
+  border-radius:50%;
+  background:var(--blue);
+  color:var(--acc);
+  border:1px solid color-mix(in srgb,var(--acc) 25%,transparent);
+  display:inline-grid;
+  place-items:center;
+  text-decoration:none;
+  font-weight:600;
+  font-size:.9rem;
+  flex:none;
+  transition:transform .22s var(--ease), background-color .22s var(--ease);
+}
+.avatar:hover{transform:scale(1.05);background:var(--acc);color:#fff}
+.lo-btn{
+  background:transparent;
+  border:1px solid var(--line);
+  color:var(--mute);
+  border-radius:99px;
+  padding:.42rem .8rem;
+  font-size:.82rem;
+  cursor:pointer;
+  white-space:nowrap;
+  transition:background-color .22s var(--ease), color .22s var(--ease), border-color .22s var(--ease);
+}
+.lo-btn:hover{background:color-mix(in srgb,var(--red) 10%,transparent);color:var(--red);border-color:color-mix(in srgb,var(--red) 25%,transparent)}
+
+/* ---------- Main Container & Generous Whitespace ---------- */
+#app{
+  max-width:1120px;
+  margin:0 auto;
+  padding:calc(6.2rem + env(safe-area-inset-top,0px)) 1.5rem 4rem;
+}
+.top{display:flex;justify-content:space-between;gap:.75rem;align-items:center;flex-wrap:wrap}
+.head{display:flex;justify-content:space-between;align-items:flex-end;gap:1.25rem;flex-wrap:wrap;margin-bottom:1.5rem}
+.head h1{font-size:2.1rem;margin:0}
+.help{
+  background:var(--blue-soft);
+  border:1px solid color-mix(in srgb,var(--acc) 16%,transparent);
+  border-radius:20px;
+  padding:.95rem 1.25rem;
+  margin-bottom:1.4rem;
+  color:var(--ink);
+  font-size:.93rem;
+  overflow-wrap:break-word;
+  word-break:normal;
+}
+.row{display:flex;justify-content:space-between;gap:.75rem;align-items:center;padding:.7rem 0;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.row:last-child{border:0}
+
+/* ---------- Gentle Dropdown / Expandable Animation ---------- */
+.expand-box{
+  overflow:hidden;
+  animation:gentleDrop .3s var(--ease) both;
+  transform-origin:top;
+}
+@keyframes gentleDrop{
+  from{opacity:0;transform:translateY(-8px) scaleY(0.97)}
+  to{opacity:1;transform:translateY(0) scaleY(1)}
+}
+
+/* ---------- Page Fade + Slide Up & Scroll Reveal ---------- */
+.page-enter{
+  animation:pageFadeUp .42s var(--ease) both;
+}
+@keyframes pageFadeUp{
+  from{opacity:0;transform:translateY(14px)}
+  to{opacity:1;transform:translateY(0)}
+}
+.reveal{
+  opacity:0;
+  transform:translateY(16px);
+  transition:opacity .52s var(--ease), transform .52s var(--ease);
+}
+.reveal.in{
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* ---------- Dashboard Grid & Stat Cards ---------- */
+.board{display:grid;gap:1.25rem;grid-template-columns:repeat(4,1fr);margin-bottom:1.25rem}
+.board>*{margin:0;min-width:0}
+.s2{grid-column:span 2}
+.s4{grid-column:1/-1}
+.statgrid{display:grid;gap:1.25rem;grid-template-columns:repeat(4,1fr)}
+.statgrid>.sg-side{grid-row:1/span 2;display:flex;flex-direction:column;justify-content:center}
+.statgrid>.sg-prog{grid-column:3}
+.statgrid>.sg-timer{grid-column:4}
+.statgrid.four{grid-template-columns:repeat(4,1fr)}
+.statgrid>*{margin:0;min-width:0}
+.statgrid>.stat{justify-content:center}
+.lec-grid{grid-template-columns:repeat(3,1fr)}
+.lec-grid>.expand-box{grid-column:1/-1}
+.stat{
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  gap:.25rem;
+  text-decoration:none;
+  color:var(--ink);
+}
+.stat b{display:block;font-size:2rem;font-weight:700;color:var(--acc);line-height:1.15;margin:.15rem 0}
+.stat.hl{
+  background:linear-gradient(135deg,#2563eb 0%,#38bdf8 100%);
+  color:#fff;
+  border:0;
+}
+.stat.hl b{color:#fff}
+.cap{font-size:.82rem;opacity:.88}
+
+/* Notifications board */
+.nb-block{border-left:4px solid var(--acc);padding:.15rem 0 .15rem .9rem;margin-top:.9rem}
+.nb-block.red{border-left-color:var(--red)}
+.nb-label{display:block;font-weight:700;color:var(--ink);margin-bottom:.2rem}
+.nb-card .li b{font-weight:700}
+.nb-overlay{position:fixed;inset:0;z-index:80;background:rgba(15,23,42,.45);display:grid;place-items:center;padding:1rem;overflow:auto}
+.nb-modal{background:var(--card);border-radius:20px;box-shadow:var(--shadow-lift);padding:1.4rem;width:min(30rem,100%);max-height:90vh;overflow:auto}
+.nb-item{display:flex;gap:.6rem;align-items:flex-start;padding:.5rem 0;border-bottom:1px solid var(--line);font-weight:400}
+.nb-item:last-child{border-bottom:0}
+
+.big{font-size:1.25rem;font-weight:600;line-height:1.35;margin:.45rem 0}
+.li{display:flex;gap:.8rem;align-items:center;padding:.55rem 0}
+.dot{width:2.1rem;height:2.1rem;border-radius:12px;background:var(--blue-soft);flex:none}
+.dot.red{background:color-mix(in srgb,var(--red) 22%,var(--blue-soft))}
+.dot.orange{background:color-mix(in srgb,var(--orange) 22%,var(--blue-soft))}
+.dot.blue{background:var(--blue)}
+.lg{display:inline-block;width:.75rem;height:.75rem;border-radius:50%;margin-right:.35rem}
+
+/* Animated Linear & Radial Progress */
+.prog-track{
+  width:100%;
+  height:10px;
+  background:var(--blue-soft);
+  border-radius:99px;
+  overflow:hidden;
+  margin:.75rem 0 .4rem;
+}
+.prog-fill{
+  height:100%;
+  background:linear-gradient(90deg,#38bdf8,#2563eb);
+  border-radius:99px;
+  width:0%;
+  transition:width .85s var(--ease);
+}
+
+/* Cozy Sky-Blue Study Timer */
+.timer{
+  background:linear-gradient(145deg,#1d4ed8 0%,#3b82f6 65%,#60a5fa 100%);
+  color:#fff;
+  border:0;
+  text-align:center;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+}
+.timer h2{color:#fff;margin-bottom:.2rem}
+.timer b{
+  display:block;
+  font-size:clamp(1.85rem, 5vw, 2.35rem);
+  font-weight:700;
+  letter-spacing:.04em;
+  margin:.65rem 0 .9rem;
+  white-space:nowrap;
+  word-break:keep-all;
+  font-variant-numeric:tabular-nums;
+}
+.timer-controls{
+  display:flex;
+  gap:.65rem;
+  justify-content:center;
+  align-items:center;
+  flex-wrap:wrap;
+  width:100%;
+}
+.rb{
+  padding:.58rem 1.3rem;
+  border-radius:99px;
+  font-weight:600;
+  border:0;
+  cursor:pointer;
+  background:#fff;
+  color:#1d4ed8;
+  font-size:.95rem;
+  white-space:nowrap;
+  word-break:keep-all;
+  min-width:5.2rem;
+  transition:transform .2s var(--ease), box-shadow .2s var(--ease);
+}
+.rb:hover{transform:scale(1.05);box-shadow:0 6px 16px rgba(0,0,0,0.18)}
+
+/* Alerts & Task Cards */
+.tk{border-left:5px solid var(--blue);padding-left:1.35rem}
+.tk.red,.alert.red{border-left-color:var(--red)}
+.tk.orange,.alert.orange{border-left-color:var(--orange)}
+.tk.blue,.alert.blue{border-left-color:var(--acc)}
+.alert{
+  padding:.7rem 1rem;
+  border-radius:16px;
+  margin-bottom:.6rem;
+  border-left:5px solid var(--acc);
+  background:var(--blue-soft);
+}
+
+/* Assignment Details Highlight Box */
+.task-details-box{
+  background:var(--blue-soft);
+  border:1px solid color-mix(in srgb,var(--acc) 20%,transparent);
+  border-radius:16px;
+  padding:.85rem 1rem;
+  margin:.7rem 0;
+  color:var(--ink);
+  font-size:.92rem;
+  line-height:1.55;
+}
+.task-details-label{
+  display:block;
+  font-size:.76rem;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.04em;
+  color:var(--acc);
+  margin-bottom:.25rem;
+}
+.task-hint{
+  font-size:.84rem;
+  color:var(--mute);
+  margin-top:.55rem;
+  padding-top:.5rem;
+  border-top:1px dashed var(--line);
+}
+
+/* Course-Grouped Directory Pills in Groups */
+.course-filter-bar{
+  display:flex;
+  gap:.45rem;
+  flex-wrap:wrap;
+  align-items:center;
+  margin-bottom:.85rem;
+}
+.course-section-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:.5rem;
+  margin:1.1rem 0 .6rem;
+  padding-bottom:.4rem;
+  border-bottom:1px solid var(--line);
+}
+.course-section-head h3{
+  margin:0;
+  font-size:1rem;
+  font-weight:600;
+  color:var(--navy);
+}
+.group-pill-grid{
+  display:flex;
+  gap:.5rem;
+  flex-wrap:wrap;
+}
+
+/* Chat & Video */
+.chat{height:270px;overflow-y:auto;background:var(--bg);border-radius:18px;padding:.85rem;margin-bottom:.8rem;border:1px solid var(--line)}
+.msg{max-width:82%;padding:.55rem .85rem;border-radius:18px;margin:.35rem 0;background:var(--card);border:1px solid var(--line);overflow-wrap:break-word}
+.msg.me{margin-left:auto;background:var(--blue);border-color:color-mix(in srgb,var(--acc) 22%,transparent)}
+.video{
+  aspect-ratio:16/9;
+  border-radius:18px;
+  background:linear-gradient(135deg,#1e3a8a,#3b82f6);
+  display:grid;
+  place-items:center;
+  color:#fff;
+  margin-bottom:.8rem;
+  padding:1rem;
+  text-align:center;
+  font-weight:500;
+}
+
+/* Language Toggle Pill */
+.lang{
+  display:inline-flex;
+  vertical-align:middle;
+  border:1px solid var(--line);
+  border-radius:99px;
+  overflow:hidden;
+  background:var(--bg);
+  font-size:.78rem;
+  flex:none;
+}
+.lang button{
+  border:0;
+  background:transparent;
+  color:var(--mute);
+  padding:.28rem .65rem;
+  cursor:pointer;
+  font-weight:500;
+  white-space:nowrap;
+  transition:background-color .2s var(--ease), color .2s var(--ease);
+}
+.lang button[aria-pressed="true"]{background:var(--blue);color:var(--acc);font-weight:600}
+
+/* Week-by-Week Calendar */
+.cal-week{display:grid;grid-template-columns:repeat(7,minmax(150px,1fr));gap:.75rem;margin-top:1rem}
+.wday{
+  min-height:250px;
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:.75rem;
+  background:var(--bg);
+  display:flex;
+  flex-direction:column;
+  gap:.5rem;
+  transition:border-color .22s var(--ease), background-color .22s var(--ease);
+}
+.wday.now{
+  border:2px solid var(--acc);
+  background:color-mix(in srgb,var(--blue) 42%,var(--card));
+}
+.wday-head{display:flex;justify-content:space-between;align-items:center;padding-bottom:.45rem;border-bottom:1px solid var(--line);margin-bottom:.1rem}
+.wday-num{font-size:1.05rem;font-weight:600}
+.wday.now .wday-num{background:var(--acc);color:#fff;border-radius:99px;padding:.08rem .55rem;font-size:.88rem}
+.ev-item{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-left:5px solid var(--acc);
+  border-radius:16px;
+  padding:.65rem .8rem;
+  font-size:.84rem;
+  line-height:1.38;
+  box-shadow:0 3px 10px rgba(15,23,42,0.04);
+}
+.ev-item.due{background:#fee2e2;border-color:#fecaca;border-left-color:#fca5a5;color:#7f1d1d}
+.ev-item.due span{color:#9b3b3b}
+.ev-item b{display:block;font-weight:700;font-size:.88rem;color:var(--ink);margin-bottom:.2rem;font-variant-numeric:tabular-nums}
+.ev-item.due b{color:#7f1d1d}
+.ev-item .ev-course{color:var(--ink);font-weight:400;margin-bottom:.2rem}
+.ev-item span{display:block;color:var(--mute);font-size:.76rem}
+
+#toast{
+  position:fixed;
+  left:50%;
+  bottom:2rem;
+  transform:translateX(-50%);
+  background:var(--ink);
+  color:var(--card);
+  padding:.7rem 1.3rem;
+  border-radius:99px;
+  box-shadow:0 12px 28px rgba(15,23,42,0.2);
+  display:none;
+  z-index:60;
+  font-size:.9rem;
+  max-width:calc(100% - 2rem);
+  text-align:center;
+}
+
+/* Assignment progress legend */
+.progress-legend{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:flex-start;
+  gap:.55rem .9rem;
+  width:100%;
+  min-width:0;
+  margin-top:.65rem;
+}
+.progress-legend-item{
+  display:inline-flex;
+  align-items:center;
+  gap:.35rem;
+  min-width:0;
+  white-space:nowrap;
+  line-height:1.35;
+  font-size:.82rem;
+}
+.progress-legend-item .lg{
+  flex:0 0 .75rem;
+  margin:0;
+}
+
+.card,.stat,.alert,.ev-item,.li>div,.top>*{
+  min-width:0;
+  overflow-wrap:break-word;
+  word-break:normal;
+}
+.top h2{flex:1 1 auto;min-width:0}
+
+/* Responsive Adjustments */
+@media(max-width:1300px){
+  .float-nav{border-radius:24px;flex-wrap:wrap;padding:.5rem .75rem}
+  .nav-links{order:3;width:100%;flex:none;padding-top:.35rem;border-top:1px solid var(--line)}
+  .nav-actions{margin-left:auto}
+  #app{padding-top:calc(8.4rem + env(safe-area-inset-top,0px))}
+}
+@media(max-width:960px){
+  .board{grid-template-columns:repeat(2,1fr)}
+  .s2{grid-column:1/-1}
+  .statgrid.four{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:640px){
+  .board{grid-template-columns:1fr}
+  .statgrid,.statgrid.four{grid-template-columns:repeat(2,1fr);gap:.8rem}
+  .statgrid>.sg-side{grid-column:auto;grid-row:auto}
+  .statgrid>.card{padding:.95rem}
+  .statgrid>.stat{font-size:.9rem;justify-content:flex-start}
+  .statgrid>.stat b{font-size:1.7rem}
+  .statgrid h2{font-size:1rem}
+  .statgrid .timer b{font-size:1.5rem}
+  .statgrid .timer-controls{gap:.4rem;flex-wrap:wrap}
+  .statgrid .rb{padding:.45rem .8rem;font-size:.82rem}
+  .statgrid .progress-legend{gap:.3rem .6rem;font-size:.76rem}
+  .course-grid{grid-template-columns:repeat(2,1fr);gap:.8rem}
+  .course-grid>.card{padding:.9rem}
+  .course-grid h2{font-size:1rem;line-height:1.3}
+  .course-grid p{font-size:.8rem !important}
+  .lec-grid{gap:.5rem}
+  .lec-grid>.card{padding:.55rem;border-radius:16px}
+  .lec-grid .video{border-radius:10px;font-size:.62rem;padding:.3rem;margin-bottom:.45rem}
+  .lec-grid .tag{font-size:.6rem;padding:.12rem .4rem}
+  .lec-grid h2{font-size:.82rem;line-height:1.25;margin-top:.4rem !important}
+  .lec-grid p.mute{font-size:.7rem;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+  .lec-grid .btn{padding:.3rem .6rem;font-size:.72rem}
+  .s2,.s4{grid-column:1/-1}
+  .float-nav-wrap{width:calc(100% - 1rem);top:calc(.5rem + env(safe-area-inset-top,0px))}
+  .float-nav{border-radius:20px;padding:.45rem .6rem;gap:.3rem}
+  .nav-brand{font-size:.95rem;padding:.3rem .5rem}
+  .nav-links a{padding:.4rem .68rem;font-size:.84rem}
+  .lo-btn{padding:.36rem .65rem;font-size:.78rem}
+  .avatar{width:1.95rem;height:1.95rem;font-size:.82rem}
+  #app{padding:calc(7.3rem + env(safe-area-inset-top,0px)) .75rem 3rem}
+  .head{margin-bottom:.8rem;gap:.6rem}
+  .head h1{font-size:1.4rem}
+  .card{padding:.9rem;border-radius:16px;margin-bottom:.75rem}
+  .tk{padding-left:.9rem;border-left-width:4px}
+  .row{align-items:flex-start;padding:.5rem 0}
+  .row span:last-child{white-space:nowrap;font-variant-numeric:tabular-nums}
+
+  body{font-size:15px;line-height:1.5}
+  h2{font-size:1rem;margin-bottom:.45rem}
+  .mute{font-size:.85rem}
+  .board,.grid{gap:.75rem}
+  .board{margin-bottom:.75rem}
+  .help{padding:.6rem .8rem;border-radius:14px;margin-bottom:.8rem;font-size:.84rem;line-height:1.45}
+  .big{font-size:1.05rem;margin:.25rem 0}
+  .li{padding:.38rem 0;gap:.6rem}
+  .dot{width:1.6rem;height:1.6rem;border-radius:9px}
+  .nb-block{margin-top:.6rem;padding-left:.7rem}
+  .btn,.btn.pill{padding:.5rem 1rem;font-size:.88rem}
+  input,select,textarea{font-size:16px;padding:.55rem .8rem;border-radius:12px;margin:.2rem 0 .65rem}
+  label{font-size:.82rem}
+  .tag{font-size:.74rem;padding:.14rem .6rem}
+  .alert{padding:.55rem .8rem;border-radius:12px;margin-bottom:.45rem}
+  .task-details-box{padding:.6rem .75rem;border-radius:12px;margin:.5rem 0;font-size:.87rem;line-height:1.5}
+  .task-details-label{font-size:.7rem;margin-bottom:.15rem}
+  .task-hint{font-size:.8rem;margin-top:.4rem;padding-top:.4rem}
+  .chat{height:230px;border-radius:14px;padding:.65rem}
+  .msg{padding:.45rem .7rem;border-radius:14px}
+  .video{border-radius:12px;margin-bottom:.6rem}
+  .course-section-head{margin:.8rem 0 .45rem}
+  .prog-track{height:8px;margin:.5rem 0 .3rem}
+  .statgrid,.statgrid.four,.course-grid{gap:.6rem}
+  .statgrid>.card{padding:.75rem .85rem}
+  .statgrid>.stat{gap:.05rem;font-size:.86rem;line-height:1.35}
+  .statgrid>.stat b{font-size:1.5rem;margin:.05rem 0}
+  .statgrid .cap{font-size:.76rem}
+  .statgrid .timer b{margin:.35rem 0 .55rem}
+  .course-grid>.card{padding:.75rem .8rem}
+  .lec-grid .btn{padding:.38rem .6rem;min-height:32px}
+
+  .cal-week{grid-template-columns:1fr;gap:.5rem;margin-top:.7rem}
+  .wday{min-height:0;padding:.55rem .7rem;border-radius:14px;gap:.35rem}
+  .wday-head{padding-bottom:.3rem}
+  .wday p.mute{margin:0 !important}
+  .ev-item{font-size:.84rem;padding:.45rem .6rem;border-radius:10px}
+  .ev-item span{font-size:.78rem}
+}
+@media(hover:none){
+  .lift-card:hover,a.stat:hover,.btn:hover,.rb:hover,.avatar:hover{transform:none}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:0.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:0.01ms !important;
+    scroll-behavior:auto !important;
+  }
+  .reveal{opacity:1;transform:none}
+}
+</style>
+<style>
+#alertpop{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:60;width:min(380px,calc(100% - 2rem));background:var(--card);color:var(--ink);border-radius:22px;padding:1.1rem 1.25rem 1rem;box-shadow:var(--shadow-lift);display:none}
+#alertpop.show{display:block;animation:apInC .45s var(--ease) both}#alertpop.hide{animation:apOutC .25s ease both}
+#alertpop h2{font-size:1rem;margin:0 0 .5rem;display:flex;align-items:center;gap:.5rem}
+#alertpop ul{list-style:none;margin:0 0 .8rem;padding:0;max-height:40vh;overflow-y:auto}
+#alertpop li{padding:.5rem .8rem;margin-bottom:.4rem;border-radius:14px;background:var(--blue);font-size:.92rem}
+#alertpop small{display:block;color:var(--mute);margin-bottom:.7rem}
+#alertpop .btn{width:100%}
+@keyframes apInC{from{opacity:0;transform:translate(-50%,-44%)}}@keyframes apOutC{to{opacity:0;transform:translate(-50%,-56%)}}
+@keyframes apIn{from{opacity:0;transform:translateY(14px)}}@keyframes apOut{to{opacity:0;transform:translateY(10px)}}
+@media(max-width:760px){#alertpop{width:calc(100% - 2rem)}}
+@media(prefers-reduced-motion:reduce){#alertpop.show,#alertpop.hide{animation:none}}
+#callpop{position:fixed;left:1.25rem;bottom:1.25rem;z-index:60;width:min(380px,calc(100% - 2rem));background:var(--card);color:var(--ink);border-radius:22px;padding:1.1rem 1.25rem 1.1rem;box-shadow:var(--shadow-lift);animation:apIn .45s var(--ease) both}
+#callpop h2{font-size:1rem;margin:0}#callpop p{margin:.3rem 0}
+.call-tile[hidden]{display:none}
+.call-tile{position:relative;aspect-ratio:16/9;margin:.7rem 0;border-radius:18px;overflow:hidden;background:var(--blue);display:grid;place-items:center}
+.call-tile video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scaleX(-1)}.call-tile [hidden]{display:none}
+.call-av{width:4.2rem;height:4.2rem;border-radius:50%;background:var(--acc);color:#fff;display:grid;place-items:center;font-size:1.6rem;font-weight:500}
+.call-name{position:absolute;left:.7rem;bottom:.6rem;padding:.1rem .65rem;border-radius:99px;background:rgba(15,23,42,.65);color:#fff;font-size:.8rem}
+.call-note{font-size:.82rem}.call-ctl{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.7rem}
+@media(max-width:760px){#callpop{left:1rem;right:1rem;width:auto;bottom:calc(6rem + env(safe-area-inset-bottom,0px))}}
+
+#callpop.big{left:max(.6rem,2.5vw);right:max(.6rem,2.5vw);top:max(.6rem,2.5vh);bottom:max(.6rem,2.5vh);width:auto;max-width:none;display:flex;flex-direction:column;z-index:80;padding:1rem 1.25rem}
+@media(max-width:760px){#callpop.big{left:.5rem;right:.5rem;top:.5rem;bottom:.5rem;padding:.8rem}}
+.call-body{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:.9rem;flex:1;min-height:0;margin-top:.6rem}
+.call-stage{display:flex;flex-direction:column;min-height:0;min-width:0;border:1px solid var(--line);border-radius:18px;overflow:hidden;background:var(--card)}
+.call-tabs{display:flex;gap:.4rem;padding:.5rem .65rem;border-bottom:1px solid var(--line);background:var(--blue-soft);flex-wrap:wrap;align-items:center}
+.call-tabs .btn,.wb-bar .btn{padding:.35rem .8rem;font-size:.82rem;min-height:0}
+.call-tabs .btn[aria-pressed=true],.wb-bar .btn[aria-pressed=true]{background:var(--acc);color:#fff;border-color:var(--acc)}
+.wb-pane,.scr-pane{display:flex;flex-direction:column;flex:1;min-height:0}
+.wb-pane[hidden],.scr-pane[hidden]{display:none}
+.wb-bar{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;padding:.45rem .65rem;border-bottom:1px solid var(--line)}
+.wb-sw{width:1.5rem;height:1.5rem;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px var(--line);cursor:pointer;padding:0}
+.wb-sw[aria-pressed=true]{box-shadow:0 0 0 2px var(--acc)}
+.wb-bar input[type=range]{width:90px}
+.wb-wrap{position:relative;flex:1;min-height:0;background:#fff}
+.wb-wrap canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:crosshair}
+.scr-pane{background:#0f172a;position:relative}
+.scr-pane video{flex:1;min-height:0;width:100%;object-fit:contain;background:#0f172a}
+.scr-empty{position:absolute;inset:0;display:grid;place-items:center;color:#cbd5e1;font-size:.9rem;padding:1rem;text-align:center}
+.call-side{display:flex;flex-direction:column;gap:.6rem;min-height:0;overflow:auto}
+.call-side .call-tile{margin:0}
+.call-mic{position:absolute;right:.6rem;bottom:.5rem;width:1.75rem;height:1.75rem;border-radius:50%;display:grid;place-items:center;background:rgba(15,23,42,.65);color:#fff}
+.call-mic.off{background:#dc2626}
+.call-mic svg,.call-ctl .btn svg{width:1.05rem;height:1.05rem;flex:none}
+.call-ctl .btn{display:inline-flex;align-items:center;gap:.4rem}
+.call-ctl .btn.ghost.is-off{background:#fee2e2;border-color:#fca5a5;color:#b91c1c}
+.call-ctl .btn.ghost.is-live{background:var(--acc);border-color:var(--acc);color:#fff}
+.call-ctl .btn.end{background:#dc2626;border-color:#dc2626;color:#fff}
+.call-ctl{justify-content:center}
+.call-tile.scr{aspect-ratio:16/9;background:#0f172a}
+.call-tile.scr video{transform:none;object-fit:contain}
+#callpop.audio .call-body{grid-template-columns:1fr;grid-template-rows:minmax(0,1fr)}
+.call-audio{display:flex;flex-direction:column;gap:.7rem;min-height:0;overflow:auto;align-items:center;justify-content:center}
+.call-audio .call-tile{width:100%;max-width:860px;margin:0;aspect-ratio:auto;flex:1;min-height:140px;max-height:100%}
+.call-audio .call-tile.scr{aspect-ratio:auto}
+.call-audio .call-av{width:7rem;height:7rem;font-size:2.8rem}
+.call-audio .call-note{text-align:center;margin:0}
+#callpop.big .call-ctl{gap:.5rem}
+@media(max-width:760px){
+  #callpop.big{border-radius:18px}
+  #callpop.big .call-ctl .btn{flex:1 1 calc(50% - .5rem);justify-content:center;padding:.65rem .5rem;font-size:.85rem}
+  .call-audio .call-av{width:5rem;height:5rem;font-size:2rem}
+  .wb-bar{gap:.3rem}.wb-bar input[type=range]{width:70px}
+  .call-side .call-note{display:none}
+}
+@media(max-height:560px) and (orientation:landscape){.call-body{grid-template-columns:minmax(0,1fr) 200px}.call-side{order:0;flex-direction:column}.call-side .call-tile{max-width:none}}
+
+@media(max-width:760px){.call-body{grid-template-columns:1fr;grid-template-rows:auto minmax(0,1fr)}.call-side{order:-1;flex-direction:row;overflow:visible}.call-side .call-tile{flex:1;max-width:48%}}
+</style>
+<style>
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+img,video,canvas,iframe,embed,object,svg{max-width:100%}
+img,video{height:auto}
+pre,code{max-width:100%;overflow-x:auto}
+a,button,input,select,textarea,label{touch-action:manipulation}
+.nav-toggle{display:none;align-items:center;justify-content:center;width:44px;height:44px;padding:0;flex:none;border-radius:50%;border:1px solid var(--line);background:var(--blue-soft);color:var(--ink);cursor:pointer}
+.lec-grid{grid-template-columns:repeat(3,1fr)}
+.course-grid{grid-template-columns:repeat(2,1fr)}
+.lec-grid>.card:not(.expand-box){display:flex;flex-direction:column}
+.lec-grid>.card:not(.expand-box)>div:last-child{margin-top:auto !important;padding-top:.9rem}
+.pager{display:flex;align-items:center;justify-content:center;gap:.75rem;flex-wrap:wrap;margin:1.1rem 0}
+@media(max-width:760px){
+  body{font-size:16px;line-height:1.55;background-attachment:scroll}
+  p,li,.row,.row span,.help,.msg,.nb-item,.alert,.task-details-box,.li,.li b,.big,label,.mute,p.mute{font-size:1rem}
+  small.mute,.cap,.statgrid .cap,.progress-legend-item,.statgrid .progress-legend,.tag,.lec-grid .tag,.ev-item span{font-size:.875rem}
+  .mute[style],p[style*="font-size"]{font-size:1rem !important}
+  small.mute[style]{font-size:.875rem !important}
+  h2,.statgrid h2,.course-grid h2{font-size:1.1rem}
+  .tag{white-space:normal}
+  .btn,.btn.pill,.lec-grid .btn,.rb,.statgrid .rb,.lo-btn,.icon-btn,.tabs button{min-height:44px;font-size:1rem}
+  .btn,.btn.pill,.lec-grid .btn{padding:.6rem 1.1rem;white-space:normal;text-align:center}
+  .btn[style]{padding:.6rem 1.1rem !important;font-size:1rem !important}
+  .rb,.statgrid .rb{padding:.6rem 1.2rem;min-width:5.2rem}
+  .icon-btn{min-width:44px;padding:.5rem}
+  .lo-btn{padding:.5rem 1.1rem}
+  .lang button{min-height:44px;min-width:48px;padding:.4rem .9rem;font-size:.95rem}
+  .avatar{width:44px;height:44px;font-size:1rem}
+  input,select,textarea{min-height:44px;font-size:16px;padding:.65rem .9rem}
+  #app{padding:calc(5rem + env(safe-area-inset-top,0px)) .9rem 3rem}
+  #auth{margin:4vh auto;padding:1.25rem;border-radius:22px}
+  .card{padding:1rem}
+  .lec-grid{grid-template-columns:repeat(3,1fr);gap:.5rem}
+  .lec-grid>.card:not(.expand-box){padding:.5rem;border-radius:14px}
+  .lec-grid>.card:has(video){grid-column:1/-1}
+  .lec-grid .video{border-radius:10px;font-size:0;padding:0;margin-bottom:.4rem}
+  .lec-grid .video::before{content:"▶";font-size:1.5rem}
+  .lec-grid .tag{font-size:.75rem;padding:.1rem .45rem}
+  .lec-grid h2{font-size:.95rem;line-height:1.25;margin:.3rem 0 .2rem !important;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .lec-grid p.mute{font-size:.8125rem;line-height:1.35;margin:0;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;cursor:pointer}
+  .lec-grid p.mute.exp{display:block;overflow:visible}
+  .lec-grid .btn{width:100%;min-height:44px;padding:.4rem .3rem;font-size:.875rem}
+  .lec-grid>.card:not(.expand-box)>div:last-child{padding-top:.5rem;gap:.35rem !important}
+  .course-grid{grid-template-columns:repeat(2,1fr);gap:.6rem}
+  .course-grid>.card{padding:.75rem}
+  .course-grid p{font-size:.9rem;overflow-wrap:anywhere}
+  .course-grid p[style]{font-size:.875rem !important}
+  .statgrid>.sg-prog,.statgrid>.sg-timer{grid-column:1/-1}
+  .statgrid .timer b{font-size:2rem}
+  .statgrid>.stat{font-size:1rem}
+  .statgrid>.stat b{font-size:1.75rem}
+  .ev-item{font-size:1rem}
+  #toast{font-size:1rem;bottom:calc(1.25rem + env(safe-area-inset-bottom,0px))}
+  .float-nav-wrap{width:calc(100% - 1rem);top:calc(.5rem + env(safe-area-inset-top,0px))}
+  .float-nav{border-radius:22px;flex-wrap:wrap;padding:.4rem .5rem .4rem .8rem;gap:.25rem;align-items:center}
+  .nav-brand{min-height:44px;font-size:1.05rem;padding:.3rem .2rem}
+  .nav-toggle{display:inline-flex;margin-left:auto}
+  .nav-links,.nav-actions{display:none}
+  .float-nav-wrap.open .float-nav{max-height:calc(100vh - 1rem);overflow-y:auto}
+  .float-nav-wrap.open .nav-links{display:flex;flex-direction:column;align-items:stretch;gap:.15rem;order:3;width:100%;flex:none;overflow:visible;border-top:1px solid var(--line);padding-top:.4rem}
+  .float-nav-wrap.open .nav-links a{min-height:44px;font-size:1rem;padding:.6rem 1rem}
+  .float-nav-wrap.open .nav-actions{display:flex;order:4;width:100%;justify-content:space-between;gap:.5rem;padding:.4rem 0 .2rem}
+}
+</style>
+<style>
+/* Structured assignment details */
+.rich-h{font-size:1.05rem;margin:1rem 0 .4rem}.rich-h:first-child{margin-top:0}
+.rich-ul{margin:.3rem 0 .6rem 1.1rem;padding:0}.rich-ul li{margin:.25rem 0}
+.rich-chips{display:flex;gap:.35rem;flex-wrap:wrap;margin:.35rem 0}
+.rich-tbl{overflow-x:auto;margin:.5rem 0}.rich-tbl table{border-collapse:collapse;width:100%;min-width:560px;font-size:.88rem}
+.rich-tbl th,.rich-tbl td{border:1px solid var(--line);padding:.5rem .6rem;text-align:left;vertical-align:top}.rich-tbl th{background:var(--lav)}
+.rich-note{background:var(--blue-soft);border-left:4px solid var(--acc);border-radius:10px;padding:.6rem .8rem;margin:.7rem 0}
+.task-details-box a{color:var(--acc);font-weight:500}.task-links{display:flex;gap:.5rem;flex-wrap:wrap;margin:.6rem 0}
+.task-links a.btn{text-decoration:none}
+</style>
+</head>
+<body>
+<div id="root"></div><noscript><div class="card" style="max-width:440px;margin:12vh auto;text-align:center"><h2>🎓 UniPlan</h2><p>This preview cannot run the app. Please open UniPlan from the published link in your browser (Safari or Chrome).</p></div></noscript><div id="toast" role="status"></div>
+<script>
+"use strict";
+/* ---------- Sample data (no real university systems are connected) ---------- */
+const DB = {
+  courses: [
+    {id:"AU007", name:"Design Thinking and Innovation", credits:2, lecturer:"Ms Quynh Nguyen Minh Ngoc", email:"lecturer1@example.com"},
+    {id:"AU008", name:"Sustainable Development and Practice 1", credits:1, lecturer:"Vân Lê Hà", email:"lecturer2@example.com"},
+    {id:"AU005", name:"Introduction to Information Technology", credits:2, lecturer:"Mr Tuan Le Hoang Viet", email:"lecturer3@example.com"},
+    {id:"AU0004.2", name:"English for General Purpose 2", credits:3, lecturer:"Thanh Loan Nguyen", email:"lecturer4@example.com"},
+    {id:"AU015", name:"Physical Education: Vovinam Level 2", credits:0, lecturer:"Mr Luật Võ Hoàng", email:"lecturer5@example.com"}],
+  /* Fall 2026 classes (16 Nov to 5 Dec 2026) */
+  sessions: [
+    {course:"AU0004.2", date:"2026-11-18", start:"10:00", end:"13:00", room:"GR02 - CREATIVITY, 5th Floor - Global Education Space"},
+    {course:"AU015", date:"2026-11-18", start:"13:00", end:"15:00", room:"VOV - Vovinam Class - Global Education Space"},
+    {course:"AU0004.2", date:"2026-11-19", start:"10:00", end:"13:00", room:"HR1 - Hall Room - Global Education Space"},
+    {course:"AU0004.2", date:"2026-11-20", start:"14:00", end:"17:00", room:"GR02 - CREATIVITY, 5th Floor - Global Education Space"},
+    {course:"AU007", date:"2026-11-21", start:"08:00", end:"12:00", room:"GR02 - CREATIVITY, 5th Floor - Global Education Space"},
+    {course:"AU015", date:"2026-11-21", start:"13:00", end:"15:00", room:"VOV - Vovinam Class - Global Education Space"},
+    {course:"AU005", date:"2026-11-24", start:"10:00", end:"13:00", room:"GR02 - CREATIVITY, 5th Floor - Global Education Space"},
+    {course:"AU015", date:"2026-11-25", start:"13:00", end:"15:00", room:"VOV - Vovinam Class - Global Education Space"},
+    {course:"AU0004.2", date:"2026-11-26", start:"10:00", end:"13:00", room:"HR1 - Hall Room - Global Education Space"},
+    {course:"AU015", date:"2026-11-28", start:"13:00", end:"15:00", room:"VOV - Vovinam Class - Global Education Space"},
+    {course:"AU0004.2", date:"2026-12-02", start:"10:00", end:"13:00", room:"GR02 - CREATIVITY, 5th Floor - Global Education Space"},
+    {course:"AU015", date:"2026-12-02", start:"13:00", end:"15:00", room:"VOV - Vovinam Class - Global Education Space"},
+    {course:"AU0004.2", date:"2026-12-03", start:"10:00", end:"13:00", room:"HR1 - Hall Room - Global Education Space"},
+    {course:"AU015", date:"2026-12-05", start:"13:00", end:"15:00", room:"VOV - Vovinam Class - Global Education Space"}],
+  lectures: [],
+  groups: [],
+  notes: ["New assignment: Assessment 2 - Academic Essay (English for General Purpose 2) – Due 05/12/2026", "Library is open until 10pm this week"]
+};
+/* No seeded demo accounts; use sign-up for this local prototype. */
+DB.resources = [];
+DB.users = [];
+const api = { save(kind, item){ DB[kind].push(item); return item; } };
+
+/* ---------- Safe DOM Helper ---------- */
+function h(tag, attrs, ...kids){
+  const el = document.createElement(tag);
+  for (const [k,v] of Object.entries(attrs || {})){
+    if (k.startsWith("on")) el.addEventListener(k.slice(2), v);
+    else if (k === "class") el.className = v;
+    else el.setAttribute(k, k === "placeholder" || k === "aria-label" ? tr(v) : v);
+  }
+  kids.flat().forEach(c => { if (c != null) el.append(c.nodeType ? c : document.createTextNode(tr(c))); });
+  if (tag === "form" && attrs && attrs.onsubmit){
+    const run = e => { e.preventDefault(); attrs.onsubmit(e); };
+    el.addEventListener("click", e => { const b = e.target.closest && e.target.closest("button"); if (b && el.contains(b) && (b.getAttribute("type") || "submit") === "submit") run(e); });
+    el.addEventListener("keydown", e => { if (e.key === "Enter" && e.target.tagName === "INPUT") run(e); });
+  }
+  return el;
+}
+
+/* ---------- Bilingual Dictionary (EN / VI) ---------- */
+const VI = {
+"Plan. Learn. Achieve.":"Lên kế hoạch. Học tập. Thành công.",
+"This email is already registered. Use the Log in tab.":"Email này đã được đăng ký. Hãy dùng tab Đăng nhập.","Wrong email or password.":"Email hoặc mật khẩu không đúng.",
+"Previous":"Trước","Next":"Sau","Page":"Trang","Log in":"Đăng nhập","Register":"Đăng ký","Create account":"Tạo tài khoản","Full name":"Họ và tên","University email":"Email trường","Password":"Mật khẩu","I am a":"Tôi là","Student":"Sinh viên","Lecturer":"Giảng viên","student":"sinh viên","lecturer":"giảng viên","Log out":"Đăng xuất",
+"Enter a valid email and a password of at least 5 characters.":"Nhập email hợp lệ và mật khẩu ít nhất 5 ký tự.",
+"Dashboard":"Trang chủ","Courses":"Môn học","Lectures":"Bài giảng","Groups":"Nhóm","Assignments":"Bài tập","Calendar":"Lịch","Notifications":"Thông báo","Profile":"Hồ sơ",
+"How to use this page: ":"Cách dùng trang này: ",
+"Your deadline alerts and recommended tasks are below. Use the menu to open any feature.":"Cảnh báo hạn nộp và việc nên làm ở bên dưới. Dùng menu để mở từng tính năng.",
+"See your courses, assign homework, and manage lessons here. Use Calendar to view your weekly schedule.":"Xem môn học, giao bài tập và quản lý bài giảng tại đây. Dùng Lịch để xem lịch dạy theo tuần.",
+"These are your subjects. Open Lectures or Assignments from the menu to see each course’s materials.":"Đây là các môn học của bạn. Mở Bài giảng hoặc Bài tập từ menu để xem tài liệu từng môn.",
+"Publish a new lecture or edit existing lesson details below. Changes update immediately for students.":"Đăng bài giảng mới hoặc chỉnh sửa thông tin bài học bên dưới. Thay đổi sẽ cập nhật ngay cho sinh viên.",
+"Pick a lesson, press Watch, and read the overview below the video.":"Chọn một bài, bấm Xem và đọc phần tổng quan bên dưới video.",
+"Choose a group organized by your semester courses, chat below, or press Audio/Video call. Chat is a local demo; calls use your microphone and camera on this device only.":"Chọn nhóm được phân theo từng môn học trong học kỳ, nhắn tin bên dưới hoặc bấm gọi thoại/video. Chat chỉ là bản demo; cuộc gọi chỉ dùng micro và camera trên thiết bị của bạn.",
+"Assign homework with deadlines for your students, or edit existing assignments below.":"Giao bài tập kèm hạn nộp cho sinh viên, hoặc chỉnh sửa các bài tập hiện có bên dưới.",
+"This is your week-by-week calendar showing your classes and assignment deadlines. Use the arrows to switch weeks.":"Đây là lịch theo từng tuần hiển thị lịch học và hạn nộp bài tập của bạn. Dùng mũi tên để chuyển tuần.",
+"Change the display name. Changes apply only in this demo.":"Đổi tên hiển thị hoặc giao diện. Thay đổi chỉ áp dụng trong bản demo.",
+"Good morning":"Chào buổi sáng","Good afternoon":"Chào buổi chiều","Good evening":"Chào buổi tối","Here’s what’s happening today.":"Hôm nay có gì mới.","Home":"Trang chủ","Library":"Thư viện","Upcoming assignments":"Bài tập sắp tới","Group projects":"Dự án nhóm","New announcements":"Thông báo mới","Today":"Hôm nay",
+"Recommended Tasks":"Việc cần chú ý","Deadline alerts":"Cảnh báo hạn nộp","Due within 24 hours":"Hạn trong 24 giờ","Due within 3 days":"Hạn trong 3 ngày","Due within 7 days":"Hạn trong 7 ngày","Priority":"Mức ưu tiên","High":"Cao","Medium":"Trung bình","Low":"Thấp","Completed":"Đã hoàn thành","Not completed":"Chưa hoàn thành","Show details":"Hiện chi tiết","Hide details":"Ẩn chi tiết","Assignment details":"Chi tiết bài tập","Suggested order":"Gợi ý thứ tự","Delete":"Xóa",
+"Time simulation":"Mô phỏng thời gian","Simulate +1 day":"Mô phỏng +1 ngày","Reset time":"Đặt lại thời gian","Simulated time":"Thời gian mô phỏng","See all":"Xem tất cả","No deadline alerts right now.":"Hiện chưa có cảnh báo hạn nộp.","Smart Deadline Alerts & Recommendations":"Cảnh báo hạn nộp thông minh & gợi ý","All caught up. No pending assignments.":"Bạn đã xong hết. Không còn bài tập chờ.",
+"Find assignments":"Tìm bài tập","Search":"Tìm kiếm","Search by title or course":"Tìm theo tên hoặc môn","Search assignments":"Tìm bài tập","All courses":"Tất cả môn học","All priorities":"Mọi mức ưu tiên","All statuses":"Mọi trạng thái","Status":"Trạng thái","Clear filters":"Xóa bộ lọc","assignment found":"bài tập tìm thấy","assignments found":"bài tập tìm thấy","No assignments match your search. Try another word or clear the filters.":"Không có bài tập phù hợp. Hãy thử từ khóa khác hoặc xóa bộ lọc.",
+"Submit assignment":"Nộp bài","Submitted":"Đã nộp","late":"trễ hạn","File is too large (max 25 MB).":"Tệp quá lớn (tối đa 25 MB).","No classes today.":"Hôm nay không có lịch học.",
+"Menu":"Menu","No lessons yet.":"Chưa có bài giảng.","credit points":"tín chỉ","No classes scheduled yet.":"Chưa có lịch học.","No deadline yet":"Chưa có hạn nộp","No deadline announced yet. You will be alerted once your lecturer sets one.":"Chưa có hạn nộp. Bạn sẽ được nhắc khi giảng viên đặt hạn.","Dismiss":"Đóng","Library resources":"Tài liệu thư viện","Share a resource":"Chia sẻ tài liệu","Title":"Tiêu đề","Description":"Mô tả","Link":"Liên kết","Choose file":"Chọn tệp","Share resource":"Chia sẻ tài liệu","Shared by":"Chia sẻ bởi","Open link":"Mở liên kết","Shared resources":"Tài liệu đã chia sẻ","No resources shared yet.":"Chưa có tài liệu nào được chia sẻ.","Resource removed.":"Đã xóa tài liệu.","Resource shared with students.":"Đã chia sẻ tài liệu với sinh viên.","General":"Chung","Need a hand?":"Cần trợ giúp?","Every page starts with a short guide on how to use it.":"Mỗi trang đều có hướng dẫn ngắn ở đầu.","Open Library":"Mở thư viện","View calendar":"Xem lịch","Class hours this week":"Giờ học trong tuần","Reminders":"Nhắc nhở","Open assignment":"Mở bài tập","No reminders right now.":"Hiện chưa có nhắc nhở.","Assignment progress":"Tiến độ bài tập","Due soon":"Sắp đến hạn","Pending":"Đang chờ","Study Timer":"Đồng hồ học tập","Active now":"Đang hoạt động","In the Library":"Trong thư viện","See notifications":"Xem thông báo","Teaching":"Đang giảng dạy",
+"Create a group for a course":"Tạo nhóm cho môn học","Group name":"Tên nhóm","Lesson":"Môn học","Course":"Môn học","Create group":"Tạo nhóm","Cancel":"Hủy","Delete group":"Xóa nhóm","Group created.":"Đã tạo nhóm.","Group deleted.":"Đã xóa nhóm.","Add a group name first.":"Hãy nhập tên nhóm trước.","Send invite":"Gửi lời mời","Classmate’s email":"Email bạn học","Members":"Thành viên","Files":"Tệp","none yet":"chưa có","Enter a valid email.":"Hãy nhập email hợp lệ.","No groups in this course yet.":"Chưa có nhóm nào trong môn học này.",
+"Announcements":"Thông báo chung","Publish a lecture":"Đăng bài giảng","Lesson title":"Tên bài học","Overview and key points":"Tổng quan và ý chính","Choose video file":"Chọn tệp video","No file chosen":"Chưa chọn tệp","Publish lecture":"Đăng bài giảng","Watch":"Xem",
+"Edit lesson":"Sửa bài học","Save changes":"Lưu thay đổi","Lesson updated.":"Đã cập nhật bài học.","Lesson deleted.":"Đã xóa bài học.",
+"Assign homework":"Giao bài tập","Assignment title":"Tên bài tập","Deadline date & time":"Ngày & giờ hạn nộp","Instructions & notes":"Hướng dẫn & ghi chú","Assign & set deadline":"Giao bài & đặt hạn","Manage assigned homework":"Quản lý bài tập đã giao","Edit assignment":"Sửa bài tập","Assignment updated.":"Đã cập nhật bài tập.","Assignment deleted.":"Đã xóa bài tập.","Homework assigned and deadline set.":"Đã giao bài tập và đặt hạn nộp.","Please enter a title and deadline.":"Vui lòng nhập tên bài tập và hạn nộp.",
+"Audio call":"Gọi thoại","Mute":"Tắt mic","Unmute":"Bật mic","Camera off":"Tắt camera","Camera on":"Bật camera","End call":"Kết thúc","Your camera":"Camera của bạn","Calls are not supported in this browser.":"Trình duyệt này không hỗ trợ cuộc gọi.","Camera unavailable. Joined with audio only.":"Không dùng được camera. Đã tham gia chỉ với âm thanh.","Could not access the microphone. Check browser permissions.":"Không truy cập được micro. Hãy kiểm tra quyền của trình duyệt.","Call ended.":"Cuộc gọi đã kết thúc.","Recording on this device":"Đang ghi trên thiết bị này","Record call":"Ghi cuộc gọi","Stop recording":"Dừng ghi","Saving recording":"Đang lưu bản ghi","Recording downloaded to this device.":"Đã tải bản ghi xuống thiết bị này.","No recording data was produced.":"Không có dữ liệu bản ghi.","Recording failed. Try again in a supported browser.":"Ghi bản ghi thất bại. Hãy thử trình duyệt khác.","Recording is not supported in this browser.":"Trình duyệt này không hỗ trợ ghi.","Recording could not start.":"Không thể bắt đầu ghi.","Start a local recording of your microphone/camera? This demo does not include other participants or screen sharing. Get everyone’s consent before recording any call.":"Bắt đầu ghi micro/camera trên thiết bị này? Bản demo không ghi người tham gia khác hoặc chia sẻ màn hình. Hãy xin sự đồng ý của mọi người trước khi ghi cuộc gọi.","Demo: other members cannot join without a call server. Recording saves only this device’s microphone/camera; screen sharing and other participants are not included.":"Bản demo: thành viên khác chưa thể tham gia vì chưa có máy chủ cuộc gọi. Bản ghi chỉ lưu micro/camera của thiết bị này; không bao gồm chia sẻ màn hình hay người tham gia khác.","Video call":"Gọi video","Whiteboard":"Bảng trắng","Shared screen":"Màn hình chia sẻ","Share screen":"Chia sẻ màn hình","Stop sharing":"Dừng chia sẻ","Pen":"Bút","Eraser":"Tẩy","Clear":"Xóa hết","Save":"Lưu","Size":"Cỡ nét","Microphone on":"Mic đang bật","Microphone muted":"Mic đã tắt","Screen sharing is not supported in this browser.":"Trình duyệt này không hỗ trợ chia sẻ màn hình.","Screen sharing was cancelled or blocked.":"Đã hủy hoặc bị chặn chia sẻ màn hình.","Screen sharing stopped.":"Đã dừng chia sẻ màn hình.","Invite":"Mời","Share file":"Chia sẻ tệp","+ New group":"+ Nhóm mới","Send":"Gửi","Write a message":"Viết tin nhắn","Message":"Tin nhắn",
+"Due":"Hạn","Edit name":"Đổi tên","Save name":"Lưu tên","New display name":"Tên hiển thị mới","Name updated.":"Đã cập nhật tên.","Please enter a valid name.":"Vui lòng nhập tên hợp lệ.","Toggle theme":"Đổi giao diện","Demo account, not linked to a university.":"Tài khoản demo, chưa liên kết với trường.",
+"Add a lesson title first.":"Hãy nhập tên bài học trước.","Lecture published.":"Đã đăng bài giảng.","Please choose a video file under 500 MB.":"Hãy chọn tệp video dưới 500 MB.",
+"Demo: the video player will load here.":"Demo: trình phát video sẽ hiện ở đây.","Demo: audio call would start here.":"Demo: cuộc gọi thoại sẽ bắt đầu ở đây.","Demo: video call would start here.":"Demo: cuộc gọi video sẽ bắt đầu ở đây.",
+"Previous week":"Tuần trước","Next week":"Tuần sau","No events":"Trống","Course completion":"Tiến độ hoàn thành",
+"Notifications board":"Bảng thông báo","Must-do tasks":"Việc cần làm","Latest updates":"Cập nhật mới nhất","New update":"Cập nhật mới","Got it":"Đã hiểu","new":"mới","No must-do tasks right now.":"Hiện chưa có việc cần làm gấp.","No new updates.":"Chưa có cập nhật mới.","Add a course":"Thêm môn học","Course code":"Mã môn","Course name":"Tên môn","Room":"Phòng","Day":"Ngày","Start":"Bắt đầu","End":"Kết thúc","Add course":"Thêm môn","Course added.":"Đã thêm môn học.","Please enter a course code and name.":"Vui lòng nhập mã môn và tên môn.","That course code already exists.":"Mã môn này đã tồn tại."
+};
+const tr = s => (typeof s === "string" && S.lang === "vi" && VI[s]) || s;
+
+const S = {
+  user:null, role:null, tab:"login", lang:"en",
+  cal:0,
+  play:null, skew:0, openDetails:new Set(), groupCourseFilter:"ALL", timer:{run:false, since:0, acc:0}, email:"",
+  editingName:false, editLectureId:null, editTaskId:null,
+  prevDonePct: 0
+};
+
+const langBtn = () => h("div", {class:"lang", role:"group", "aria-label":"Language"}, [["en","EN"],["vi","VI"]].map(([c, label]) => h("button", {type:"button", "aria-pressed":String(S.lang === c), onclick:() => { S.lang = c; render(); }}, label)));
+function pick(cb, accept){ const i = h("input", {type:"file", accept:accept || ""}); i.addEventListener("change", () => { if (i.files[0]) cb(i.files[0]); }); i.click(); }
+const PAGES = ["dashboard","courses","lectures","groups","assignments","calendar","profile"];
+const label = p => p[0].toUpperCase() + p.slice(1);
+const course = id => DB.courses.find(c => c.id === id);
+function toast(t){ const el = document.getElementById("toast"); el.textContent = tr(t); el.style.display = "block"; clearTimeout(toast.t); toast.t = setTimeout(() => el.style.display = "none", 2600); }
+const field = (lbl, ctl) => h("div", {}, h("label", {}, lbl), ctl);
+const courseSelect = (val) => {
+  const s = h("select", {}, DB.courses.map(c => h("option", {value:c.id}, c.id + " – " + c.name)));
+  if (val) s.value = val;
+  return s;
+};
+const help = txt => h("div", {class:"help reveal"}, h("strong", {}, "How to use this page: "), txt);
+
+function toLocalInput(ms){
+  if (ms == null || isNaN(ms)) return "";
+  const d = new Date(ms);
+  return `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}T${pad2(d.getHours())}:${pad2(d.getMinutes())}`;
+}
+
+/* ---------- Floating Navigation Auto-Hide & Reveal Controller ---------- */
+let lastScrollY = 0;
+let idleTimer = null;
+
+function showFloatingNav(){
+  const nav = document.getElementById("floating-nav");
+  if (nav) nav.classList.remove("nav-hidden");
+}
+function hideFloatingNav(){
+  const nav = document.getElementById("floating-nav");
+  if (!nav || S.navOpen) return;
+  if (window.scrollY > 80 && !nav.contains(document.activeElement)){
+    nav.classList.add("nav-hidden");
+  }
+}
+function resetNavIdle(){
+  clearTimeout(idleTimer);
+  idleTimer = setTimeout(hideFloatingNav, 3500);
+}
+
+window.addEventListener("scroll", () => {
+  const y = window.scrollY;
+  if (y < 60 || y < lastScrollY){
+    showFloatingNav();
+  } else if (y > 90 && y > lastScrollY + 6){
+    hideFloatingNav();
+  }
+  lastScrollY = y;
+  resetNavIdle();
+}, {passive:true});
+
+window.addEventListener("mousemove", e => {
+  if (e.clientY < 75) showFloatingNav();
+  resetNavIdle();
+}, {passive:true});
+
+window.addEventListener("keydown", () => {
+  showFloatingNav();
+  resetNavIdle();
+}, {passive:true});
+
+window.addEventListener("touchstart", () => {
+  showFloatingNav();
+  resetNavIdle();
+}, {passive:true});
+
+/* ---------- Smooth Scroll Reveal & Progress Bar Animation Hook ---------- */
+let revealObserver = null;
+function initEffects(){
+  if (revealObserver) revealObserver.disconnect();
+  const targets = document.querySelectorAll(".reveal");
+  if ("IntersectionObserver" in window){
+    revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting){
+          entry.target.classList.add("in");
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, {threshold:0.06, rootMargin:"0px 0px -20px 0px"});
+    targets.forEach(el => revealObserver.observe(el));
+  } else {
+    targets.forEach(el => el.classList.add("in"));
+  }
+
+  requestAnimationFrame(() => {
+    document.querySelectorAll("[data-prog-target]").forEach(bar => {
+      const target = bar.getAttribute("data-prog-target");
+      bar.style.width = target + "%";
+    });
+  });
+}
+
+/* ---------- Auth ---------- */
+function authView(){
+  const reg = S.tab === "register";
+  const name = h("input", {autocomplete:"name"}), email = h("input", {type:"email", required:"", autocomplete:"email"}),
+        pw = h("input", {type:"password", required:"", minlength:"5"}), role = h("select", {}, h("option", {value:"student"}, "Student"), h("option", {value:"lecturer"}, "Lecturer"));
+  const err = h("p", {class:"mute", role:"alert", style:"color:var(--red);min-height:1.4em"});
+  const submit = e => {
+    e.preventDefault();
+    if (!email.value.includes("@") || pw.value.length < 5){ err.textContent = tr("Enter a valid email and a password of at least 5 characters."); return; }
+    S.user = null;
+    const mail = email.value.trim().toLowerCase(), found = DB.users.find(u => u.email === mail);
+    if (reg){
+      if (found){ err.textContent = tr("This email is already registered. Use the Log in tab."); return; }
+      const u = {email:mail, password:pw.value, name:name.value.trim() || mail.split("@")[0], role:role.value};
+      DB.users.push(u); S.user = u.name; S.role = u.role; S.email = u.email;
+    } else {
+      if (!found || found.password !== pw.value){ err.textContent = tr("Wrong email or password."); return; }
+      S.user = found.name; S.role = found.role; S.email = found.email;
+    }
+    S.editingName = false;
+    location.hash = "dashboard"; render();
+  };
+  return h("div", {id:"auth", class:"card page-enter"},
+    h("div", {class:"top"}, h("h1", {style:"color:var(--acc)"}, "🎓 UniPlan"), langBtn()),
+    h("p", {class:"mute"}, "Plan. Learn. Achieve."),
+    h("div", {class:"tabs"}, ["login","register"].map(t => h("button", {class:"btn" + (S.tab === t ? "" : " ghost"), type:"button", onclick:() => { S.tab = t; render(); }}, t === "login" ? "Log in" : "Register"))),
+    h("form", {onsubmit:submit}, reg ? field("Full name", name) : null, field("University email", email), field("Password", pw), reg ? field("I am a", role) : null, err, h("button", {class:"btn", style:"width:100%;margin-top:.4rem", type:"submit"}, reg ? "Create account" : "Log in")));
+}
+
+/* ---------- Pages ---------- */
+function addCourseCard(){
+  const cid = h("input", {placeholder:"e.g. CS310"}), nm = h("input", {placeholder:"e.g. Operating Systems"}), room = h("input", {placeholder:"e.g. B2-401"});
+  const day = h("select", {}, [1,2,3,4,5].map(d => h("option", {value:String(d)}, DOW()[d]))), from = h("input", {type:"time", value:"07:30"}), to = h("input", {type:"time", value:"09:00"});
+  const add = e => {
+    e.preventDefault();
+    const id = cid.value.trim().toUpperCase(), name = nm.value.trim();
+    if (!id || !name) return toast("Please enter a course code and name.");
+    if (DB.courses.some(c => c.id === id)) return toast("That course code already exists.");
+    DB.courses.push({id, name, lecturer:S.user, room:room.value.trim() || "TBA", sched:[[Number(day.value), from.value, to.value]]});
+    announce("course", "New course: " + name + " (" + id + ")");
+    toast("Course added."); render();
+  };
+  return h("form", {class:"card reveal", onsubmit:add}, h("h2", {}, "Add a course"), field("Course code", cid), field("Course name", nm), field("Room", room), field("Day", day), field("Start", from), field("End", to),
+    h("p", {style:"margin-top:.7rem"}, h("button", {class:"btn", type:"submit"}, "Add course")));
+}
+
+const courseSessions = c => {
+  const dated = DB.sessions.filter(x => x.course === c.id).sort((a, b) => (a.date + a.start).localeCompare(b.date + b.start)).map(x => {
+    const [y, m, d] = x.date.split("-").map(Number);
+    return h("p", {style:"font-size:.9rem"}, DOW()[new Date(y, m - 1, d).getDay()] + " " + pad2(d) + "/" + pad2(m) + " · " + x.start + "–" + x.end);
+  });
+  const weekly = (c.sched || []).map(sl => h("p", {style:"font-size:.9rem"}, DOW()[sl[0]] + " · " + sl[1] + "–" + sl[2]));
+  const all = dated.concat(weekly);
+  return all.length ? all : [h("p", {class:"mute", style:"font-size:.9rem"}, "No classes scheduled yet.")];
+};
+const pages = {
+  courses(){
+    return [
+      help("These are your subjects. Open Lectures or Assignments from the menu to see each course’s materials."),
+      S.role === "lecturer" ? addCourseCard() : null,
+      h("div", {class:"grid course-grid"}, DB.courses.map(c =>
+        h("div", {class:"card lift-card reveal"},
+          h("span", {class:"tag"}, c.id),
+          h("h2", {style:"margin-top:.6rem"}, c.name),
+          c.credits != null ? h("p", {class:"mute", style:"font-size:.85rem"}, c.credits + " " + tr("credit points")) : null,
+          h("p", {class:"mute"}, c.lecturer + (c.room ? " · " + c.room : "")),
+          c.email ? h("p", {class:"mute", style:"font-size:.85rem;overflow-wrap:anywhere"}, c.email) : null,
+          h("div", {style:"margin-top:.7rem;padding-top:.6rem;border-top:1px solid var(--line)"}, courseSessions(c)))))
+    ];
+  },
+
+  profile(){
+    const nameInput = h("input", {type:"text", value:S.user, "aria-label":"New display name"});
+    const saveName = e => {
+      e.preventDefault();
+      const val = nameInput.value.trim();
+      if (!val) return toast("Please enter a valid name.");
+      S.user = val;
+      const u = DB.users.find(x => x.email === S.email);
+      if (u) u.name = val;
+      S.editingName = false;
+      toast("Name updated.");
+      render();
+    };
+
+    const editSection = S.editingName
+      ? h("form", {onsubmit:saveName, class:"expand-box", style:"margin-top:1rem;padding-top:1rem;border-top:1px solid var(--line)"},
+          field("New display name", nameInput),
+          h("div", {style:"display:flex;gap:.5rem;flex-wrap:wrap"},
+            h("button", {class:"btn", type:"submit"}, "Save name"),
+            h("button", {class:"btn ghost", type:"button", onclick:() => { S.editingName = false; render(); }}, "Cancel")))
+      : h("div", {style:"margin-top:1rem;display:flex;gap:.6rem;flex-wrap:wrap"},
+          h("button", {class:"btn ghost", type:"button", onclick:() => { S.editingName = true; render(); }}, "Edit name"),
+          h("button", {class:"btn", type:"button", onclick:() => { S.user = null; S.editingName = false; S.tab = "login"; location.hash = ""; render(); }}, "Log out"));
+
+    return [
+      help("Change the display name or switch theme. Changes apply only in this demo."),
+      h("div", {class:"card reveal"},
+        h("h2", {}, S.user),
+        h("p", {class:"mute"}, S.email || ""),
+        h("p", {style:"margin:.5rem 0"}, h("span", {class:"tag"}, S.role)),
+        h("p", {class:"mute"}, "Demo account, not linked to a university."),
+        editSection)
+    ];
+  }
+};
+
+/* Lectures (Library) */
+pages.lectures = function(){
+  const lec = S.role === "lecturer", title = h("input"), ov = h("textarea", {rows:"3"}), sel = courseSelect(), fname = h("span", {class:"mute"}, "No file chosen");
+  let file = null;
+  const up = h("div", {class:"card reveal"}, h("h2", {}, "Publish a lecture"), field("Lesson title", title), field("Course", sel), field("Overview and key points", ov),
+    h("p", {}, h("button", {class:"btn ghost", type:"button", onclick:() => pick(f => { file = f; fname.textContent = f.name; }, "video/*")}, "Choose video file"), " ", fname),
+    h("button", {class:"btn", onclick:() => {
+      if (!title.value.trim()) return toast("Add a lesson title first.");
+      if (file && (!file.type.startsWith("video/") || file.size > 500 * 1024 * 1024)) return toast("Please choose a video file under 500 MB.");
+      api.save("lectures", {id:Date.now(), course:sel.value, title:title.value.trim(), overview:ov.value.trim() || "No overview yet.", url:file ? URL.createObjectURL(file) : ""});
+      toast("Lecture published."); S.libPage = Math.ceil(DB.lectures.length / 9); render(); }}, "Publish lecture"));
+
+  const renderLectureCard = l => {
+    const isEditing = lec && S.editLectureId === l.id;
+    if (isEditing){
+      const eTitle = h("input", {value:l.title}), eCourse = courseSelect(l.course), eOv = h("textarea", {rows:"3"});
+      eOv.value = l.overview;
+      return h("div", {class:"card expand-box"},
+        h("h2", {}, "Edit lesson"),
+        field("Lesson title", eTitle),
+        field("Course", eCourse),
+        field("Overview and key points", eOv),
+        h("div", {style:"display:flex;gap:.5rem;flex-wrap:wrap"},
+          h("button", {class:"btn", type:"button", onclick:() => {
+            if (!eTitle.value.trim()) return toast("Add a lesson title first.");
+            l.title = eTitle.value.trim();
+            l.course = eCourse.value;
+            l.overview = eOv.value.trim() || "No overview yet.";
+            S.editLectureId = null;
+            toast("Lesson updated.");
+            render();
+          }}, "Save changes"),
+          h("button", {class:"btn ghost", type:"button", onclick:() => { S.editLectureId = null; render(); }}, "Cancel")));
+    }
+
+    return h("div", {class:"card lift-card reveal"},
+      l.url && S.play === l.id ? h("video", {controls:"", autoplay:"", src:l.url, style:"width:100%;border-radius:16px;margin-bottom:.75rem"}) : h("div", {class:"video"}, l.title),
+      h("span", {class:"tag"}, course(l.course)?.name || l.course),
+      h("h2", {style:"margin-top:.6rem"}, l.title),
+      h("p", {class:"mute", role:"button", tabindex:"0", "aria-expanded":"false", title:"Tap to read the full overview",
+        onclick:e => { const el = e.currentTarget, on = el.classList.toggle("exp"); el.setAttribute("aria-expanded", String(on)); },
+        onkeydown:e => { if (e.key === "Enter" || e.key === " "){ e.preventDefault(); e.currentTarget.click(); } }}, l.overview),
+      h("div", {style:"margin-top:.9rem;display:flex;gap:.5rem;flex-wrap:wrap"},
+        h("button", {class:"btn ghost", onclick:() => { if (!l.url) return toast("Demo: the video player will load here."); S.play = l.id; render(); }}, "Watch"),
+        lec ? h("button", {class:"btn ghost", onclick:() => { S.editLectureId = l.id; render(); }}, "Edit lesson") : null,
+        lec ? h("button", {class:"btn out", onclick:() => {
+          const idx = DB.lectures.indexOf(l);
+          if (idx > -1) DB.lectures.splice(idx, 1);
+          toast("Lesson deleted.");
+          render();
+        }}, "Delete") : null));
+  };
+
+  const PER = 9, total = DB.lectures.length, lastPage = Math.max(1, Math.ceil(total / PER));
+  S.libPage = Math.min(Math.max(S.libPage || 1, 1), lastPage);
+  const pageItems = DB.lectures.slice((S.libPage - 1) * PER, S.libPage * PER);
+  const go = n => () => { S.libPage = n; render(); };
+  const pager = total > PER ? h("div", {class:"pager"},
+    h("button", Object.assign({class:"btn ghost", type:"button", onclick:go(S.libPage - 1)}, S.libPage === 1 ? {disabled:""} : {}), "‹ " + tr("Previous")),
+    h("span", {class:"mute"}, tr("Page") + " " + S.libPage + " / " + lastPage),
+    h("button", Object.assign({class:"btn ghost", type:"button", onclick:go(S.libPage + 1)}, S.libPage === lastPage ? {disabled:""} : {}), tr("Next") + " ›")) : null;
+  return [help(lec ? "Publish lectures, and share files or links with your students in Library resources below. Students can open everything you share." : "Pick a lesson, press Watch, and read the overview. Library resources below hold files and links shared by your lecturers."), lec ? up : null,
+    pageItems.length ? h("div", {class:"grid lec-grid"}, pageItems.map(renderLectureCard)) : h("p", {class:"mute"}, "No lessons yet."),
+    pager,
+    h("h2", {class:"reveal", style:"margin:1.5rem 0 .75rem"}, "Library resources"),
+    ...resourcesView(lec)];
+};
+
+/* Library resources: lecturers share, students download */
+function resourcesView(lec){
+  const blocks = [];
+  if (lec){
+    const t = h("input", {placeholder:"e.g. Week 3 slides"}), sel = courseSelect(), d = h("textarea", {rows:"2"}),
+          link = h("input", {type:"url", placeholder:"https://example.com (optional)"}), fname = h("span", {class:"mute"}, "No file chosen");
+    let file = null;
+    blocks.push(h("div", {class:"card reveal"}, h("h2", {}, "Share a resource"),
+      field("Title", t), field("Course", sel), field("Description", d), field("Link", link),
+      h("p", {}, h("button", {class:"btn ghost", type:"button", onclick:() => pick(f => {
+        if (f.size > 50 * 1024 * 1024) return toast("File is too large (max 50 MB).");
+        file = f; fname.textContent = f.name; })}, "Choose file"), " ", fname),
+      h("button", {class:"btn", type:"button", onclick:() => {
+        const lk = link.value.trim();
+        if (!t.value.trim()) return toast("Add a title first.");
+        if (!file && !lk) return toast("Attach a file or add a link.");
+        if (lk && !/^https?:\/\//i.test(lk)) return toast("Links must start with http:// or https://");
+        DB.resources.unshift({id:Date.now(), course:sel.value, title:t.value.trim(), desc:d.value.trim(), link:lk,
+          name:file ? file.name : "", url:file ? URL.createObjectURL(file) : "", by:S.user});
+        DB.notes.push("New resource shared: " + t.value.trim());
+        toast("Resource shared with students."); render(); }}, "Share resource")));
+  }
+  const cards = DB.resources.map(r => h("div", {class:"card lift-card reveal"},
+    h("span", {class:"tag"}, course(r.course)?.name || r.course),
+    h("h2", {style:"margin-top:.6rem"}, r.title),
+    r.desc ? h("p", {class:"mute"}, r.desc) : null,
+    h("p", {class:"mute", style:"font-size:.8rem"}, tr("Shared by") + " " + r.by),
+    h("div", {style:"margin-top:.8rem;display:flex;gap:.5rem;flex-wrap:wrap"},
+      r.url ? h("a", {class:"btn ghost", href:r.url, download:r.name}, "Download: " + r.name) : null,
+      r.link ? h("a", {class:"btn ghost", href:r.link, target:"_blank", rel:"noopener noreferrer"}, "Open link") : null,
+      lec ? h("button", {class:"btn out", type:"button", onclick:() => {
+        const i = DB.resources.indexOf(r); if (i > -1) DB.resources.splice(i, 1);
+        toast("Resource removed."); render(); }}, "Delete") : null)));
+  blocks.push(cards.length ? h("div", {class:"grid"}, cards) : h("p", {class:"mute"}, "No resources shared yet."));
+  return blocks;
+}
+
+/* ---------- Smart Deadline Alerts & Recommendations ---------- */
+const HOUR = 36e5, DAY = 24 * HOUR, pad2 = n => String(n).padStart(2, "0");
+const nowMs = () => Date.now() + S.skew;
+const hoursFromNow = n => Date.now() + n * HOUR;
+const dkey = d => `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}`;
+const locale = () => S.lang === "vi" ? "vi-VN" : "en-GB";
+const LV = {red:"Due within 24 hours", orange:"Due within 3 days", blue:"Due within 7 days"};
+const NAV = [["dashboard","🏠","Home"],["assignments","📝","Assignments"],["courses","📘","Courses"],["calendar","📅","Calendar"],["groups","👥","Groups"],["lectures","🎬","Library"]];
+const greet = () => { const hr = new Date().getHours(); return tr(hr < 12 ? "Good morning" : hr < 18 ? "Good afternoon" : "Good evening") + ", " + S.user + "!"; };
+
+const GUIDE_URL = "https://drive.google.com/file/d/1G0CNI8Vy7gBacVagXVGmsSAyx-qRcxvB/view", BRIEF_URL = "https://drive.google.com/file/d/1sR1u2APRbMJZCO0qag6bAQC9XOgYOQuY/view";
+DB.tasks = [
+  {id:3, title:"Assessment 2 - Academic Essay", course:"English for General Purpose 2", courseId:"AU0004.2", due:new Date(2026, 11, 5, 23, 59).getTime(), priority:"High", done:false,
+   notes:"Individual 1,200–1,300 word academic essay on a contemporary issue using at least 3 credible academic sources (APA 7th edition), followed by a 5-minute oral defence and 5-minute Q&A.",
+   detail:[
+    {h:"GCS6 · Assessment Item 2 of 4: Academic Essay"},
+    {chips:["Weight: 30%", "Due: First session, Week 5", "Individual", "Pass mark: 60/100", "Length: 1,200–1,300 words", "Format: .docx/.pdf"]},
+    {p:["Explore a contemporary issue affecting students, society, or the world today and write a research-based academic essay (1,200–1,300 words, excluding references) supported by a minimum of ", {b:"three credible academic sources"}, " (peer-reviewed journal articles, academic books, government reports, or reputable research publications)."]},
+    {p:["You will also deliver an individual ", {b:"5-minute oral defence"}, " followed by a ", {b:"5-minute Q&A session"}, " with your lecturer explaining your research topic, thesis statement, main arguments, and how your sources support your work in your own words."]},
+    {h:"Deliverables Checklist (Submit One File via Canvas)"},
+    {ul:[
+      [{b:"1. Academic Essay (1,200–1,300 words):"}, " Clear introduction with thesis statement, well-developed body paragraphs, conclusion, summarising/paraphrasing/synthesising across sources, and APA 7th edition in-text citations."],
+      [{b:"2. Reference List:"}, " All sources cited in the essay formatted in APA 7th edition."],
+      [{b:"3. Source Evidence Appendix:"}, " Full APA 7th reference, original information taken (quotation, key ideas, data), page/section number, and a brief note on how the information was used in the essay."],
+      [{b:"File Naming:"}, " StudentName_StudentID_Project Essay (e.g., NguyenTuanVu_SWS123456_Project Essay)."]
+    ]},
+    {h:"Marking Criteria & Rubric (100 Points Total)"},
+    {table:{
+      head:["Criterion", "Points", "Excellent Descriptor"],
+      rows:[
+        ["Understanding of Topic & Argument Development", "25 pts", "Clear, focused understanding of the topic; develops a strong, logical argument supported by relevant evidence and thoughtful discussion."],
+        ["Use of Academic Sources & Evidence", "25 pts", "Uses a range of credible academic sources effectively; selects relevant evidence and integrates sources smoothly to support arguments."],
+        ["Summarising, Paraphrasing & Synthesising", "25 pts", "Effectively summarises, paraphrases, and synthesises ideas from multiple sources; clearly connects perspectives to develop the argument."],
+        ["Essay Structure & Academic Writing Style", "15 pts", "Well-organised introduction, body paragraphs, and conclusion; appropriate academic language and logical flow throughout."],
+        ["APA Referencing & Academic Integrity", "10 pts", "Correctly applies APA 7th edition in-text citations, reference list, and appendix; acknowledges any AI-assisted brainstorming/grammar checking."]
+      ]
+    }},
+    {note:[{b:"Academic Integrity & Late Policy:"}, " AI tools may support brainstorming and language checking, but final ideas and analysis must be your own and any AI assistance must be acknowledged. Late submissions lose 10% per calendar day (0 after 5 days)."]}
+   ]},
+  {id:1, title:"Final Project Presentation - Mini IT Portfolio", course:"Introduction to Information Technology", courseId:"AU005", due:null, priority:"Medium", done:false,
+   notes:"Group assignment (3–4 students): propose a mathematics learning website for beginners, with UI/UX design, a cloud deployment proposal (AWS or Azure), an introductory Python course and a flowchart algorithm. Submit one folder per group.",
+   links:[{label:"Assignment Brief", href:BRIEF_URL}, {label:"Detailed Student Guidance", href:GUIDE_URL}],
+   detail:[
+    {h:"Final Assignment"},
+    {p:["In this group assignment (3–4 students), you will act as an IT Research and Development (R&D) team to propose a mathematics learning website for beginners."]},
+    {p:["Your project should include website structure and UI/UX design, a cloud deployment proposal using AWS or Microsoft Azure, an introductory Python course, and a mathematical problem-solving algorithm with a flowchart."]},
+    {ul:[[{b:"Up to 80 points:"}, " Final Group Report, Presentation Slides, and Individual Self-Reflection."],
+         [{b:"Up to 90 points:"}, " All requirements above, plus a Group Video Presentation."],
+         [{b:"Up to 100 points:"}, " All requirements above, plus a Clickable Figma Prototype and a Working Python Program."]]},
+    {p:["Please review the ", {a:"Assignment Brief", href:BRIEF_URL}, ", and ", {a:"Detailed Student Guidance", href:GUIDE_URL}, " carefully before starting your project."]},
+    {p:["All group members are expected to contribute actively and understand the work submitted."]},
+    {p:["All students must use the ", {b:"APA 7th Edition referencing style"}, " in the Final Group Report."]},
+    {h:"Final Assignment Submission Requirements"},
+    {p:["Submit ", {b:"ONE folder per group"}, " containing:"]},
+    {ul:[[{b:"Mandatory:"}, " Final Group Report, Presentation Slides, and completed Self-reflection Form."],
+         [{b:"Optional Supporting Files:"}, " Figma, Canva, draw.io, Python files, videos, and other relevant materials. Deliverables required for the selected assessment level remain compulsory."],
+         [{b:"Access Permissions:"}, " Grant the Lecturer viewing access to all submitted files and links."],
+         [{b:"Individual Grades:"}, " Grades may be adjusted based on individual contributions recorded in the Self-reflection Form."]]},
+    {p:[{b:"Important:"}, " Ensure all files are complete, accessible, and properly organised before submission."]}]},
+  {id:2, title:"Final Project Showcase: Innovation and Design Thinking", course:"Design Thinking and Innovation", courseId:"AU007", due:new Date(2026, 10, 21, 23, 59).getTime(), priority:"Medium", done:false,
+   notes:"Group project: apply Design Thinking to a real-world challenge, create a project poster and deliver a 12-minute presentation to a panel of evaluators.",
+   detail:[
+    {p:["Work in teams to apply Design Thinking to a real-world challenge. Each group will create a project poster and deliver a 12-minute presentation to communicate the value, impact, and feasibility of the proposed solution to a panel of evaluators."]},
+    {h:"At a glance"},
+    {chips:["Group work", "Poster", "12-minute presentation", "Value + impact + feasibility", "Testing + refinement"]},
+    {p:["This showcase emphasises creativity, problem-solving, teamwork, and the ability to communicate complex ideas clearly. It is a chance to demonstrate both conceptual understanding and practical implementation skills in design thinking."]},
+    {h:"Assignment Description"},
+    {p:["The Innovation and Design Thinking Showcase 2025 provides an opportunity to apply design thinking principles to real-world challenges. Teams develop a project that addresses a practical problem or social need, and then present the solution through a ", {b:"comprehensive poster"}, " and a ", {b:"12-minute group presentation"}, " to a panel of evaluators."]},
+    {h:"Example Project Themes"},
+    {ul:[["Developing a mobile application to improve mental wellbeing among university students"],
+         ["Creating sustainable solutions to reduce single-use plastic in urban communities"],
+         ["Designing an educational platform to enhance language learning for young learners"],
+         ["Innovative affordable health monitoring tools for busy professionals"]]},
+    {h:"Deliverables"},
+    {table:{head:["Deliverable", "What it should communicate"], rows:[
+      [{b:"Project Poster", tags:["Visual", "Structured"]}, "The problem, target users, core insight, solution concept, key features, expected impact, feasibility, and evidence of testing/refinement."],
+      [{b:"12-minute Group Presentation", tags:["Time-managed", "Equal contribution"]}, "A clear and persuasive narrative: why the problem matters, what users need, what you propose, how you tested it, and why it will work."]]}},
+    {h:"Assessment Criteria (Rubric)"},
+    {p:["Each criterion is marked on a 0–20 scale (Excellent: 16–20, Proficient: 11–15, Developing: 6–10, Limited: 0–5)."]},
+    {table:{head:["Criteria", "Excellent (16–20)", "Proficient (11–15)", "Developing (6–10)", "Limited (0–5)"], rows:[
+      ["1. Problem understanding & user insight", "Problem is clearly defined, specific, and highly relevant. Deep understanding of target users supported by research, interviews, data, or empathy maps.", "Problem is clear and relevant. Some evidence of user research and understanding of user needs.", "Problem is general or unclear. Limited user research or shallow understanding of users.", "Problem is vague, unrealistic, or shows little/no understanding of users."],
+      ["2. Creativity & innovation of solution", "Solution is highly original, creative, and well-connected to the problem. Shows strong innovation and risk-taking in ideas.", "Solution is relevant and somewhat creative. Shows some originality.", "Solution is common or predictable. Limited creativity.", "Solution lacks originality or is underdeveloped."],
+      ["3. Feasibility & evidence from test & refine", "Strong evidence of testing. Clear documentation of refinements based on results. Solution is realistic and implementable.", "Some testing conducted. Clear changes made. Mostly feasible.", "Very limited testing. Few changes made. Feasibility is uncertain.", "No real testing. No refinement shown. Solution is unrealistic or impractical."],
+      ["4. Peer feedback & critical response", "Actively seeks, gives, and applies peer feedback. Feedback is constructive, specific, evidence-based, and leads to clear project improvements. Excellent listening and reflection.", "Gives and receives feedback with some depth. Feedback is mostly relevant, and some improvements are made.", "Feedback engagement is limited or uneven. Improvements are small or unclear.", "Rarely engages in peer feedback or feedback is ignored/missing. No evidence of improvement from peer feedback."],
+      ["5. Communication & presentation (Poster + 12 minutes)", "Clear, persuasive, well-structured. Poster is professional and easy to follow. Team speaks confidently and equally. Excellent time management.", "Mostly clear and structured. Poster is engaging. Team participation is mostly balanced. Good time management.", "Presentation lacks clarity or structure. Poster is crowded, unclear, or incomplete. Unequal participation.", "Poor communication. Poster is confusing or missing. Presentation is disorganised or unfinished."]]}},
+    {note:[{b:"Tips for strong performance:"}, " Define a specific user and context, use evidence (interviews, surveys, observation, empathy maps), document testing and iteration clearly, and keep the poster simple and readable from a distance. In the presentation, balance speaking time and finish within 12 minutes."]}]}];
+
+const hasDue = t => t.due != null && !isNaN(t.due);
+const byDue = (a, b) => { const x = hasDue(a) ? a.due : Infinity, y = hasDue(b) ? b.due : Infinity; return x < y ? -1 : x > y ? 1 : 0; };
+const richSeg = x => typeof x === "string" ? x : x.b ? h("strong", {}, x.b) : h("a", {href:x.href, target:"_blank", rel:"noopener noreferrer"}, x.a + " ↗");
+const richChips = list => h("div", {class:"rich-chips"}, list.map(c => h("span", {class:"tag"}, c)));
+function richView(parts){
+  return parts.map(p => p.h ? h("h3", {class:"rich-h"}, p.h)
+    : p.p ? h("p", {}, p.p.map(richSeg))
+    : p.ul ? h("ul", {class:"rich-ul"}, p.ul.map(li => h("li", {}, li.map(richSeg))))
+    : p.chips ? richChips(p.chips)
+    : p.note ? h("div", {class:"rich-note"}, p.note.map(richSeg))
+    : p.table ? h("div", {class:"rich-tbl"}, h("table", {}, h("thead", {}, h("tr", {}, p.table.head.map(c => h("th", {}, c)))),
+        h("tbody", {}, p.table.rows.map(r => h("tr", {}, r.map((c, i) => h("td", {}, typeof c === "string" ? (i === 0 ? h("strong", {}, c) : c) : [h("strong", {}, c.b), c.tags ? richChips(c.tags) : null])))))))
+    : null);
+}
+
+function level(t){ if (t.done || !hasDue(t)) return null; const d = t.due - nowMs(); return d <= DAY ? "red" : d <= 3 * DAY ? "orange" : d <= 7 * DAY ? "blue" : null; }
+function left(t){
+  if (!hasDue(t)) return tr("No deadline yet");
+  const d = t.due - nowMs(), a = Math.abs(d), vi = S.lang === "vi", days = Math.floor(a / DAY), hr = Math.floor(a % DAY / HOUR), mn = Math.floor(a % HOUR / 60000);
+  const s = days >= 2 ? days + (vi ? " ngày" : " days") : a >= HOUR ? (days * 24 + hr) + "h " + mn + "m" : mn + (vi ? " phút" : " min");
+  return d < 0 ? (vi ? "Quá hạn " : "Overdue by ") + s : vi ? "Còn " + s : s + " left";
+}
+function prio(t){
+  if (t.done || !hasDue(t)) return "Low";
+  const d = t.due - nowMs();
+  return d <= 3 * DAY ? "High" : d <= 7 * DAY ? "Medium" : "Low";
+}
+function score(t){ if (!hasDue(t)) return 15; const d = t.due - nowMs(); return d < 0 ? 100 : d <= DAY ? 80 : d <= 3 * DAY ? 60 : d <= 7 * DAY ? 40 : 20; }
+const ranked = () => DB.tasks.filter(t => !t.done).sort((a, b) => score(b) - score(a) || byDue(a, b));
+function advice(t, i){
+  if (!hasDue(t)) return "No deadline announced yet. You will be alerted once your lecturer sets one.";
+  const d = t.due - nowMs(), n = Math.ceil(d / DAY), hp = prio(t) === "High" ? " High priority." : "";
+  if (d < 0) return `Overdue — complete as soon as possible.`;
+  if (d <= DAY) return (i === 0 ? `Suggested #1: ` : `Suggested: `) + `Due within 24 hours.` + hp;
+  if (d <= 3 * DAY) return `Due within ${n} days.` + hp;
+  if (d <= 7 * DAY) return `Due in ${n} days.` + hp;
+  return `Upcoming (${n} days remaining).`;
+}
+const alertsNow = () => DB.tasks.map(t => ({t, lv:level(t)})).filter(a => a.lv).sort((a, b) => a.t.due - b.t.due);
+const alertStrip = max => alertsNow().slice(0, max || 99).map(({t, lv}) => h("div", {class:"alert " + lv}, h("b", {}, t.title), h("span", {}, " · " + tr(LV[lv]) + " · " + left(t))));
+
+const sent = new Set();
+function notify(){
+  if (S.role !== "student") return 0;
+  const fresh = [];
+  alertsNow().forEach(({t, lv}) => { const k = t.id + ":" + lv; if (!sent.has(k)){ sent.add(k); fresh.push(t.title + ": " + tr(LV[lv])); } });
+  if (fresh.length) showAlerts(fresh);
+  return fresh.length;
+}
+let popItems = [];
+function showAlerts(items){
+  let el = document.getElementById("alertpop");
+  if (!el){ el = document.createElement("div"); el.id = "alertpop"; el.setAttribute("role", "region"); el.setAttribute("aria-live", "polite"); document.body.appendChild(el); }
+  popItems = popItems.concat(items); el.classList.remove("hide");
+  el.setAttribute("aria-label", tr("Deadline alerts"));
+  el.replaceChildren(h("h2", {}, "🔔 " + tr("Deadline alerts")), h("ul", {}, popItems.map(t => h("li", {}, t))),
+    h("button", {class:"btn", type:"button", onclick:dismissAlerts}, "Dismiss"));
+  el.classList.add("show");
+}
+function dismissAlerts(){
+  const el = document.getElementById("alertpop"); popItems = [];
+  if (!el || !el.classList.contains("show")) return;
+  el.classList.add("hide"); setTimeout(() => { el.classList.remove("show", "hide"); }, 250);
+}
+addEventListener("keydown", e => { if (e.key === "Escape") dismissAlerts(); });
+DB.feed = [];
+function announce(kind, text){ DB.feed.push({id:Date.now() + Math.random(), kind, text, seen:false}); DB.notes.push(text); }
+const mustDo = () => alertsNow().filter(a => a.lv === "red" || a.lv === "orange").slice(0, 4);
+const unseen = () => DB.feed.filter(f => !f.seen);
+function iconBtn(label, d, fn){
+  const b = h("button", {class:"btn ghost icon-btn", type:"button", "aria-label":label, title:tr(label), onclick:fn});
+  b.innerHTML = `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${d}"/></svg>`;
+  return b;
+}
+function noteList(){
+  const items = DB.notes.slice(-5).reverse();
+  return items.length ? items.map(n => h("div", {class:"nb-item"}, h("span", {}, n))) : [h("p", {class:"mute"}, "No new updates.")];
+}
+function mustDoList(){
+  const md = mustDo();
+  return md.length ? md.map(({t, lv}) => h("div", {class:"li"}, h("span", {class:"dot " + lv}), h("div", {}, h("b", {}, t.title), h("small", {class:"mute", style:"display:block"}, t.course + " · " + left(t))))) : [h("p", {class:"mute"}, "No must-do tasks right now.")];
+}
+function boardPopup(){
+  const fresh = unseen();
+  if (S.role !== "student" || !fresh.length) return null;
+  const close = go => { fresh.forEach(f => f.seen = true); if (go) location.hash = go; render(); };
+  return h("div", {class:"nb-overlay", role:"dialog", "aria-modal":"true", "aria-label":"Notifications board"},
+    h("div", {class:"nb-modal"},
+      h("div", {class:"top"}, h("h2", {}, "🔔 Notifications board"), h("span", {class:"tag"}, fresh.length + " " + tr("new"))),
+      h("div", {class:"nb-block"}, h("span", {class:"nb-label"}, "New update"),
+        fresh.map(f => h("div", {class:"nb-item"}, h("span", {}, f.text)))),
+      h("div", {class:"nb-block red"}, h("span", {class:"nb-label"}, "Must-do tasks"), mustDoList()),
+      h("div", {style:"display:flex;gap:.55rem;flex-wrap:wrap;margin-top:1rem"},
+        h("button", {class:"btn", type:"button", onclick:() => close()}, "Got it"),
+        h("button", {class:"btn ghost", type:"button", onclick:() => close("assignments")}, "Open assignments"))));
+}
+const DOW = () => S.lang === "vi" ? ["CN","T2","T3","T4","T5","T6","T7"] : ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+const hm = ms => new Date(ms).toLocaleTimeString("en-GB", {hour:"2-digit", minute:"2-digit"});
+const classesOn = day => {
+  const key = dkey(day);
+  const dated = DB.sessions.filter(x => x.date === key).map(x => { const c = course(x.course) || {}; return {id:x.course, name:c.name || x.course, room:x.room, lecturer:c.lecturer || "", time:x.start + "–" + x.end}; });
+  const weekly = DB.courses.flatMap(c => (c.sched || []).filter(sl => sl[0] === day.getDay()).map(sl => ({id:c.id, name:c.name, room:c.room, lecturer:c.lecturer || "", time:sl[1] + "–" + sl[2]})));
+  return dated.concat(weekly).sort((a, b) => a.time.localeCompare(b.time));
+};
+
+function completionStats(){
+  const done = DB.tasks.filter(t => t.done).length;
+  const soon = DB.tasks.filter(t => level(t)).length;
+  const total = DB.tasks.length || 1;
+  return { done, soon, total, pct: Math.round((done / total) * 100) };
+}
+
+function submit(t){
+  pick(f => {
+    if (f.size > 25 * 1024 * 1024) return toast("File is too large (max 25 MB).");
+    S.prevDonePct = completionStats().pct;
+    t.done = true; t.submitted = {name:f.name, at:nowMs(), late:hasDue(t) && nowMs() > t.due};
+    toast("Submitted: " + f.name); render();
+  });
+}
+
+function taskCard(t, i, fromHome){
+  const lv = level(t);
+  const showDetails = S.openDetails.has(t.id);
+  return h("div", {class:"card lift-card reveal tk " + (lv || "")},
+    h("div", {class:"top"}, h("h2", {}, t.title), h("span", {class:"tag " + (lv || "")}, t.done ? "Completed" : left(t))),
+    h("p", {class:"mute"}, t.course + " · " + (hasDue(t) ? new Date(t.due).toLocaleString(locale(), {dateStyle:"medium", timeStyle:"short"}) : tr("No deadline yet"))),
+    h("div", {style:"display:flex;gap:.4rem;flex-wrap:wrap;margin:.45rem 0"},
+      h("span", {class:"tag"}, tr("Priority") + ": " + tr(prio(t))),
+      h("span", {class:"tag"}, t.done ? "Completed" : "Not completed")),
+    showDetails ? h("div", {class:"task-details-box expand-box"},
+      h("span", {class:"task-details-label"}, "Assignment details"),
+      fromHome || !t.detail ? h("div", {}, t.notes || "No notes.") : h("div", {class:"rich"}, richView(t.detail))) : null,
+    showDetails && t.links && (fromHome || !t.detail) ? h("div", {class:"task-links"}, t.links.map(l => h("a", {class:"btn ghost", href:l.href, target:"_blank", rel:"noopener noreferrer"}, l.label + " ↗"))) : null,
+    t.done && t.submitted ? h("p", {class:"mute"}, tr("Submitted") + ": " + t.submitted.name + " · " + new Date(t.submitted.at).toLocaleString(locale(), {dateStyle:"medium", timeStyle:"short"}) + (t.submitted.late ? " (" + tr("late") + ")" : "")) : null,
+    t.done ? null : h("p", {class:"task-hint"}, advice(t, i)),
+    h("div", {style:"display:flex;gap:.55rem;flex-wrap:wrap;margin-top:.85rem"},
+      t.done ? null : h("button", {class:"btn", onclick:() => submit(t)}, "Submit assignment"),
+      h("button", {class:"btn ghost", onclick:() => {
+        if (showDetails) S.openDetails.delete(t.id);
+        else S.openDetails.add(t.id);
+        render();
+      }}, showDetails ? "Hide details" : "Show details")));
+}
+
+/* Assignments Page */
+pages.assignments = function(){
+  if (S.role === "lecturer"){
+    const titleInp = h("input", {placeholder:"e.g. Binary Trees Lab"}),
+          courseSel = courseSelect(),
+          dueInp = h("input", {type:"datetime-local", value:toLocalInput(hoursFromNow(48))}),
+          prSel = h("select", {}, ["High","Medium","Low"].map(p => h("option", {value:p}, p))),
+          notesInp = h("textarea", {rows:"3", placeholder:"Write assignment instructions, rubric, or submission requirements..."});
+    prSel.value = "Medium";
+
+    const createTask = e => {
+      e.preventDefault();
+      if (!titleInp.value.trim() || !dueInp.value) return toast("Please enter a title and deadline.");
+      const cObj = course(courseSel.value);
+      const dueMs = new Date(dueInp.value).getTime();
+      const newTask = {
+        id: Date.now(),
+        title: titleInp.value.trim(),
+        course: cObj ? cObj.name : courseSel.value,
+        courseId: courseSel.value,
+        due: dueMs,
+        priority: prSel.value,
+        done: false,
+        notes: notesInp.value.trim() || "No additional instructions."
+      };
+      DB.tasks.unshift(newTask);
+      announce("assignment", `New assignment: ${newTask.title} (${newTask.course}) – Due ${new Date(dueMs).toLocaleDateString(locale())}`);
+      toast("Homework assigned and deadline set.");
+      render();
+    };
+
+    const formCard = h("div", {class:"card reveal"},
+      h("h2", {}, "Assign homework"),
+      h("form", {onsubmit:createTask},
+        field("Assignment title", titleInp),
+        h("div", {class:"grid"},
+          field("Course", courseSel),
+          field("Deadline date & time", dueInp)),
+        field("Instructions & notes", notesInp),
+        h("button", {class:"btn", type:"submit"}, "Assign & set deadline")));
+
+    const sortedTasks = [...DB.tasks].sort(byDue);
+
+    const listCards = sortedTasks.map(t => {
+      if (S.editTaskId === t.id){
+        const eTitle = h("input", {value:t.title}),
+              eCourse = courseSelect(t.courseId || (DB.courses.find(c => c.name === t.course) || {}).id),
+              eDue = h("input", {type:"datetime-local", value:toLocalInput(t.due)}),
+              ePr = h("select", {}, ["High","Medium","Low"].map(p => h("option", {value:p}, p))),
+              eNotes = h("textarea", {rows:"3"});
+        ePr.value = t.priority;
+        eNotes.value = t.notes || "";
+
+        return h("div", {class:"card expand-box"},
+          h("h2", {}, "Edit assignment"),
+          field("Assignment title", eTitle),
+          h("div", {class:"grid"},
+            field("Course", eCourse),
+            field("Deadline date & time", eDue)),
+          field("Instructions & notes", eNotes),
+          h("div", {style:"display:flex;gap:.5rem;flex-wrap:wrap"},
+            h("button", {class:"btn", type:"button", onclick:() => {
+              if (!eTitle.value.trim() || !eDue.value) return toast("Please enter a title and deadline.");
+              const cObj = course(eCourse.value);
+              t.title = eTitle.value.trim();
+              t.courseId = eCourse.value;
+              t.course = cObj ? cObj.name : eCourse.value;
+              t.due = new Date(eDue.value).getTime();
+              t.priority = ePr.value;
+              t.notes = eNotes.value.trim();
+              S.editTaskId = null;
+              toast("Assignment updated.");
+              render();
+            }}, "Save changes"),
+            h("button", {class:"btn ghost", type:"button", onclick:() => { S.editTaskId = null; render(); }}, "Cancel")));
+      }
+
+      const lv = level(t);
+      return h("div", {class:"card lift-card reveal tk " + (lv || "")},
+        h("div", {class:"top"},
+          h("h2", {}, t.title),
+          h("span", {class:"tag " + (lv || "")}, t.done ? "Completed" : left(t))),
+        h("p", {class:"mute"}, t.course + " · " + (hasDue(t) ? tr("Due") + ": " + new Date(t.due).toLocaleString(locale(), {dateStyle:"medium", timeStyle:"short"}) : tr("No deadline yet"))),
+        h("p", {style:"margin:.4rem 0"}, h("span", {class:"tag"}, tr("Priority") + ": " + tr(prio(t)))),
+        h("div", {class:"task-details-box"},
+          h("span", {class:"task-details-label"}, "Assignment details"),
+          h("div", {}, t.notes || "")),
+        h("div", {style:"margin-top:.9rem;display:flex;gap:.5rem;flex-wrap:wrap"},
+          h("button", {class:"btn ghost", type:"button", onclick:() => { S.editTaskId = t.id; render(); }}, "Edit assignment"),
+          h("button", {class:"btn out", type:"button", onclick:() => {
+            const idx = DB.tasks.indexOf(t);
+            if (idx > -1) DB.tasks.splice(idx, 1);
+            toast("Assignment deleted.");
+            render();
+          }}, "Delete")));
+    });
+
+    return [
+      help("Assign homework with deadlines for your students, or edit existing assignments below."),
+      formCard,
+      h("h2", {class:"reveal", style:"margin:1.25rem 0 .75rem"}, "Manage assigned homework"),
+      h("div", {class:"grid"}, listCards)
+    ];
+  }
+
+  /* Student view */
+  const stats = completionStats();
+  const progBar = h("div", {class:"prog-fill", "data-prog-target":String(stats.pct), style:`width:${S.prevDonePct}%`});
+  S.prevDonePct = stats.pct;
+
+  const progressBanner = h("div", {class:"card reveal"},
+    h("div", {class:"top"},
+      h("h2", {style:"margin:0"}, "Assignment progress"),
+      h("span", {class:"tag"}, `${stats.done} / ${stats.total} (${stats.pct}%)`)),
+    h("div", {class:"prog-track"}, progBar),
+    h("p", {class:"mute", style:"font-size:.82rem"}, stats.done === stats.total ? "All caught up. No pending assignments." : `${stats.total - stats.done} remaining`));
+
+  const f = S.find || (S.find = {text:"", course:"", pr:"", st:""});
+  const text = h("input", {type:"search", placeholder:"Search by title or course", "aria-label":"Search assignments"});
+  text.value = f.text;
+  const choice = (key, opts) => { const s = h("select", {}, opts.map(o => h("option", {value:o[0]}, o[1]))); s.value = f[key]; s.addEventListener("change", () => { f[key] = s.value; draw(); }); return s; };
+  const courseSel = choice("course", [["", "All courses"], ...DB.courses.map(c => [c.name, c.name])]),
+        pr = choice("pr", [["", "All priorities"], ["High", "High"], ["Medium", "Medium"], ["Low", "Low"]]),
+        st = choice("st", [["", "All statuses"], ["todo", "Not completed"], ["done", "Completed"]]);
+  const box = h("div"), count = h("p", {class:"mute", role:"status", style:"margin-top:.5rem"});
+  function draw(){
+    const q = f.text.trim().toLowerCase(), rank = ranked();
+    const hits = DB.tasks.filter(t => (!q || (t.title + " " + t.course).toLowerCase().includes(q)) && (!f.course || t.course === f.course) && (!f.pr || prio(t) === f.pr) && (!f.st || (f.st === "done") === t.done))
+      .sort((a, b) => a.done - b.done || score(b) - score(a) || byDue(a, b));
+    count.textContent = hits.length + " " + tr(hits.length === 1 ? "assignment found" : "assignments found");
+    box.replaceChildren(...(hits.length ? hits.map(t => taskCard(t, rank.indexOf(t))) : [h("p", {class:"mute"}, "No assignments match your search. Try another word or clear the filters.")]));
+    initEffects();
+  }
+  text.addEventListener("input", () => { f.text = text.value; draw(); });
+  draw();
+  return [
+    help("Type a word to find an assignment, or use the filters. Alerts turn red, orange or blue as deadlines get closer. An assignment counts as completed only after you submit it."),
+    progressBanner,
+    h("div", {class:"card reveal"}, h("h2", {}, "Smart Deadline Alerts & Recommendations"), alertStrip().length ? alertStrip() : h("p", {class:"mute"}, "No deadline alerts right now.")),
+    h("div", {class:"card reveal"}, h("h2", {}, "Find assignments"), field("Search", text), h("div", {class:"grid"}, field("Course", courseSel), field("Priority", pr), field("Status", st)),
+      h("button", {class:"btn ghost", onclick:() => { S.find = null; render(); }}, "Clear filters"), count),
+    h("div", {class:"card reveal"}, h("h2", {}, "Time simulation"), h("p", {class:"mute"}, "Move the clock forward to watch alerts change. Each alert level is announced only once per assignment."),
+      h("div", {style:"margin:.6rem 0;display:flex;gap:.5rem;flex-wrap:wrap"},
+        h("button", {class:"btn ghost", onclick:() => { S.skew += DAY; notify(); render(); }}, "Simulate +1 day"),
+        h("button", {class:"btn ghost", onclick:() => { S.skew = 0; render(); }}, "Reset time")),
+      h("p", {class:"mute"}, tr("Simulated time") + ": " + new Date(nowMs()).toLocaleString(locale(), {dateStyle:"medium", timeStyle:"short"}))),
+    box
+  ];
+};
+
+/* Group Work — Organized by Semester Courses */
+pages.groups = function(){
+  const st = S.role === "student";
+  const activeFilter = S.groupCourseFilter || "ALL";
+  const visibleGroups = activeFilter === "ALL" ? DB.groups : DB.groups.filter(x => x.course === activeFilter);
+  const g = visibleGroups.find(x => x.id === S.group) || visibleGroups[0] || null;
+  if (g) S.group = g.id;
+
+  const lessonName = id => (DB.courses.find(c => c.id === id) || {}).name || id;
+  const nm = h("input", {placeholder:"Group name", "aria-label":"Group name"});
+  const lesson = h("select", {}, DB.courses.map(c => h("option", {value:c.id}, c.id + " – " + c.name)));
+  if (activeFilter !== "ALL") lesson.value = activeFilter;
+  const mail = h("input", {type:"email", placeholder:"Classmate’s email", "aria-label":"Classmate’s email"});
+
+  const intro = help("Choose a group organized by your semester courses, chat below, or press Audio/Video call. Chat is a local demo; calls use your microphone and camera on this device only.");
+
+  const courseFilterBar = h("div", {class:"course-filter-bar"},
+    h("button", {
+      class:"btn" + (activeFilter === "ALL" ? "" : " ghost"),
+      style:"padding:.42rem .9rem;font-size:.82rem",
+      onclick:() => { S.groupCourseFilter = "ALL"; render(); }
+    }, `${tr("All courses")} (${DB.groups.length})`),
+    DB.courses.map(c => {
+      const cnt = DB.groups.filter(gr => gr.course === c.id).length;
+      return h("button", {
+        class:"btn" + (activeFilter === c.id ? "" : " ghost"),
+        style:"padding:.42rem .9rem;font-size:.82rem",
+        onclick:() => { S.groupCourseFilter = c.id; S.group = null; render(); }
+      }, `${c.id} (${cnt})`);
+    }),
+    st ? h("button", {
+      class:"btn" + (S.newGroup ? "" : " out"),
+      style:"margin-left:auto;padding:.42rem .95rem;font-size:.82rem",
+      "aria-pressed":String(!!S.newGroup),
+      onclick:() => { S.newGroup = !S.newGroup; render(); }
+    }, "+ New group") : null
+  );
+
+  const coursesToShow = activeFilter === "ALL"
+    ? DB.courses.filter(c => DB.groups.some(gr => gr.course === c.id))
+    : DB.courses.filter(c => c.id === activeFilter);
+
+  const groupedDirectory = coursesToShow.length
+    ? coursesToShow.map(c => {
+        const cGroups = DB.groups.filter(gr => gr.course === c.id);
+        return h("div", {},
+          h("div", {class:"course-section-head"},
+            h("h3", {}, `${c.id} – ${c.name}`),
+            h("span", {class:"tag"}, `${cGroups.length}`)),
+          cGroups.length
+            ? h("div", {class:"group-pill-grid"}, cGroups.map(x =>
+                h("button", {
+                  class:"btn" + (x === g ? "" : " ghost"),
+                  style:"padding:.48rem 1rem;font-size:.88rem",
+                  onclick:() => { S.group = x.id; S.confirmDel = null; S.inviting = false; render(); }
+                }, x.name)))
+            : h("p", {class:"mute", style:"font-size:.86rem"}, "No groups in this course yet."));
+      })
+    : [h("p", {class:"mute"}, "No groups yet. Create one for each lesson you need.")];
+
+  const directoryCard = h("div", {class:"card reveal"}, courseFilterBar, groupedDirectory);
+
+  const create = () => {
+    if (!nm.value.trim()) return toast("Add a group name first.");
+    const ng = {id:Date.now(), name:nm.value.trim(), course:lesson.value, owner:"You", members:["You"], files:[], msgs:[]};
+    DB.groups.push(ng);
+    S.group = ng.id;
+    S.newGroup = false;
+    if (S.groupCourseFilter !== "ALL") S.groupCourseFilter = ng.course;
+    toast("Group created.");
+    render();
+  };
+
+  const form = S.newGroup && st ? h("div", {class:"card expand-box"}, h("h2", {}, "Create a group for a course"), field("Group name", nm), field("Course", lesson),
+    h("div", {style:"display:flex;gap:.5rem"}, h("button", {class:"btn", onclick:create}, "Create group"), h("button", {class:"btn ghost", onclick:() => { S.newGroup = false; render(); }}, "Cancel"))) : null;
+
+  if (!g) return [intro, directoryCard, form];
+
+  const box = h("div", {class:"chat"}), inp = h("input", {style:"margin:0", placeholder:"Write a message", "aria-label":"Message"});
+  const draw = () => { box.replaceChildren(...g.msgs.map(m => h("div", {class:"msg" + (m[0] === "You" ? " me" : "")}, h("small", {class:"mute"}, m[0]), h("div", {}, m[1])))); box.scrollTop = box.scrollHeight; };
+  const send = e => { e.preventDefault(); const t = inp.value.trim(); if (!t) return; g.msgs.push(["You", t]); inp.value = ""; draw(); };
+  const invite = e => { e.preventDefault(); const v = mail.value.trim(); if (!v.includes("@")) return toast("Enter a valid email."); g.members.push(v.split("@")[0] + " (invited)"); S.inviting = false; toast("Invite sent to " + v + " (demo)."); render(); };
+  draw();
+
+  const del = !st ? null : g.owner !== "You" ? h("p", {class:"mute"}, "Only the creator can delete this group.")
+    : S.confirmDel === g.id ? h("div", {class:"help expand-box", style:"margin-top:.8rem"}, h("p", {}, "Delete this group? Its chat and file list will be removed for everyone."),
+        h("div", {style:"display:flex;gap:.5rem;margin-top:.5rem"}, h("button", {class:"btn", onclick:() => { DB.groups.splice(DB.groups.indexOf(g), 1); S.group = null; S.confirmDel = null; toast("Group deleted."); render(); }}, "Yes, delete group"), h("button", {class:"btn ghost", onclick:() => { S.confirmDel = null; render(); }}, "Cancel")))
+    : h("button", {class:"btn out", style:"margin-top:.6rem", onclick:() => { S.confirmDel = g.id; render(); }}, "Delete group");
+
+  return [intro, directoryCard, form, h("div", {class:"card reveal"}, h("div", {class:"top"}, h("h2", {}, g.name), h("span", {class:"tag"}, g.course + " · " + lessonName(g.course))),
+    h("p", {class:"mute", style:"margin-bottom:.6rem"}, tr("Members") + ": " + g.members.join(", ")), box, h("form", {onsubmit:send, style:"display:flex;gap:.5rem;align-items:center"}, inp, h("button", {class:"btn", type:"submit"}, "Send")),
+    h("div", {style:"margin:.8rem 0;display:flex;gap:.5rem;flex-wrap:wrap"}, h("button", {class:"btn ghost", onclick:() => startCall(g, false)}, "Audio call"), h("button", {class:"btn ghost", onclick:() => startCall(g, true)}, "Video call"),
+      st ? h("button", {class:"btn" + (S.inviting ? "" : " ghost"), "aria-pressed":String(!!S.inviting), onclick:() => { S.inviting = !S.inviting; render(); }}, "Invite") : null, h("button", {class:"btn ghost", onclick:() => pick(f => { g.files.push(f.name); toast("Shared: " + f.name); render(); })}, "Share file")),
+    S.inviting ? h("form", {onsubmit:invite, class:"expand-box", style:"display:flex;gap:.5rem;margin-bottom:.7rem;align-items:center"}, Object.assign(mail, {style:"margin:0"}), h("button", {class:"btn", type:"submit"}, "Send invite")) : null,
+    h("p", {class:"mute"}, tr("Files") + ": " + (g.files.join(", ") || tr("none yet"))), del)];
+};
+
+/* Dashboard */
+const clock = () => { const t = S.timer, s = Math.floor((t.acc + (t.run ? Date.now() - t.since : 0)) / 1000); return [Math.floor(s / 3600), Math.floor(s % 3600 / 60), s % 60].map(pad2).join(":"); };
+setInterval(() => { const el = document.querySelector("[data-clock]"); if (el) el.textContent = clock(); }, 1000);
+const arc = (from, len, paint) => len > 0 ? `<path d="M15 105 A85 85 0 0 1 185 105" pathLength="100" fill="none" style="stroke:${paint}" stroke-width="20" stroke-linecap="round" stroke-dasharray="${len} ${100 - len}" stroke-dashoffset="${-from}"/>` : "";
+
+pages.dashboard = function(){
+  const st = S.role === "student", base = new Date(nowMs()), top = ranked(), al = alertsNow(), nx = st ? top[0] : null, cls = classesOn(base);
+
+  const cards = st
+    ? [[top.length, "Upcoming assignments", "assignments", al.filter(a => a.lv === "red").length + " · " + tr("Due within 24 hours")],
+       [DB.groups.length, "Group projects", "groups", "Active now"],
+       [DB.lectures.length, "Lectures", "lectures", "In the Library"],
+       [DB.notes.length, "New announcements", "dashboard", "See notifications"]]
+    : [[DB.courses.length, "Courses", "courses", "Teaching"],
+       [DB.tasks.filter(t => !t.done).length, "Upcoming assignments", "assignments", "Assign homework"],
+       [DB.lectures.length, "Lectures", "lectures", "In the Library"],
+       [DB.resources.length, "Shared resources", "lectures", "In the Library"]];
+
+  const rem = nx ? [nx.title, hasDue(nx) ? tr("Due") + " " + hm(nx.due) + " · " + left(nx) : left(nx), "Open assignment", "assignments", nx.id]
+    : cls[0] ? [cls[0].name, cls[0].time + " · " + cls[0].room, "View calendar", "calendar"]
+    : ["No reminders right now.", "", "View calendar", "calendar"];
+
+  const stats = completionStats();
+  const pDone = (stats.done / stats.total) * 100, pSoon = (stats.soon / stats.total) * 100, gauge = h("div");
+  gauge.innerHTML = `<svg viewBox="0 0 200 125" role="img" aria-label="${stats.pct}%" style="width:100%"><defs><pattern id="hat" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="3" height="6" style="fill:var(--mute)" opacity=".35"/></pattern></defs>${arc(0, 100, "url(#hat)")}${arc(0, pDone, "var(--acc)")}${arc(pDone, pSoon, "var(--orange)")}<text x="100" y="92" text-anchor="middle" font-size="30" font-weight="700" style="fill:var(--ink)">${stats.pct}%</text><text x="100" y="112" text-anchor="middle" font-size="11" style="fill:var(--mute)">${S.lang === "vi" ? "Đã nộp" : "Submitted"}</text></svg>`;
+  const dot = (c, txt) => h("span", {class:"progress-legend-item mute"}, h("i", {class:"lg", style:"background:" + c}), txt);
+
+  const progBar = h("div", {class:"prog-fill", "data-prog-target":String(stats.pct), style:`width:${S.prevDonePct}%`});
+  S.prevDonePct = stats.pct;
+
+  const statCards = cards.map((c, i) => h("a", {href:"#" + c[2], class:"card stat reveal" + (i === 0 ? " hl" : "")}, h("span", {}, c[1]), h("b", {}, String(c[0])), h("small", {class:"cap"}, c[3])));
+
+  return [
+    help(st ? "Your deadline alerts and recommended tasks are below. Use the menu to open any feature." : "See your courses, assign homework, and manage lessons here. Use Calendar to view your weekly schedule."),
+    h("div", {class:"board"},
+      h("div", {class:"card s4 reveal"}, h("h2", {}, "Today"), cls.length ? cls.map(c => h("div", {class:"row"}, h("span", {}, c.name + " · " + c.room + (c.lecturer ? " · " + c.lecturer : "")), h("span", {class:"mute"}, c.time))) : h("p", {class:"mute"}, "No classes today.")),
+      st ? h("div", {class:"s4 reveal"}, h("h2", {style:"margin:.4rem 0 .8rem"}, "Recommended Tasks"), top.length ? h("div", {class:"grid"}, top.slice(0, 3).map((t, i) => taskCard(t, i, true))) : h("p", {class:"mute"}, "All caught up. No pending assignments."))
+         : h("div", {class:"s4 statgrid four"}, statCards),
+      h("div", {class:"card s2 reveal nb-card"}, h("div", {class:"top"}, h("h2", {}, "Notifications board"), unseen().length && st ? h("span", {class:"tag"}, unseen().length + " " + tr("new")) : null),
+        st ? h("div", {class:"nb-block red"}, h("span", {class:"nb-label"}, "Must-do tasks"), mustDoList()) : null,
+        h("div", {class:"nb-block"}, h("span", {class:"nb-label"}, "Latest updates"), noteList())),
+      h("div", {class:"card reveal"}, h("h2", {}, "Reminders"), h("p", {class:"big"}, rem[0]), h("p", {class:"mute", style:"margin-bottom:.8rem"}, rem[1]),
+        h("button", {class:"btn pill out", onclick:() => { if (rem[4]) S.openDetails.add(rem[4]); location.hash = rem[3]; }}, rem[2])),
+      h("div", {class:"card reveal"}, h("div", {class:"top"}, h("h2", {}, st ? "Deadline alerts" : "Upcoming assignments"), h("a", {href:"#assignments", class:"btn ghost pill", style:"padding:.35rem .85rem;font-size:.82rem"}, "See all")),
+        st ? (al.length ? al.slice(0, 4).map(a => h("div", {class:"li"}, h("span", {class:"dot " + a.lv}), h("div", {}, h("b", {}, a.t.title), h("small", {class:"mute", style:"display:block"}, left(a.t))))) : h("p", {class:"mute"}, "No deadline alerts right now."))
+           : (top.length ? top.slice(0, 4).map(t => h("div", {class:"li"}, h("span", {class:"dot " + (level(t) || "blue")}), h("div", {}, h("b", {}, t.title), h("small", {class:"mute", style:"display:block"}, t.course + " · " + left(t))))) : h("p", {class:"mute"}, "All caught up. No pending assignments."))),
+      !st ? null : h("div", {class:"s4 statgrid"},
+        statCards,
+        h("div", {class:"card reveal sg-side sg-prog"}, h("h2", {}, "Assignment progress"), gauge, h("div", {class:"prog-track"}, progBar), h("div", {class:"progress-legend"}, dot("var(--acc)", tr("Completed")), dot("var(--orange)", tr("Due soon")), dot("var(--blue)", tr("Pending")))),
+        h("div", {class:"card timer reveal sg-side sg-timer"}, h("h2", {}, "Study Timer"), h("b", {"data-clock":""}, clock()),
+          h("div", {class:"timer-controls"},
+            h("button", {class:"rb", "aria-label":S.timer.run ? "Pause" : "Start", onclick:() => { const t = S.timer; if (t.run){ t.acc += Date.now() - t.since; t.run = false; } else { t.since = Date.now(); t.run = true; } render(); }}, S.timer.run ? "Pause" : "Start"),
+            h("button", {class:"rb", "aria-label":"Reset", onclick:() => { S.timer = {run:false, since:0, acc:0}; render(); }}, "Reset")))))
+  ];
+};
+
+/* ---------- Week-by-Week Calendar View ---------- */
+pages.calendar = function(){
+  const now = new Date(nowMs());
+  const startOfWeek = new Date(now.getFullYear(), now.getMonth(), now.getDate() - now.getDay() + (S.cal * 7));
+  const endOfWeek = new Date(startOfWeek.getFullYear(), startOfWeek.getMonth(), startOfWeek.getDate() + 6);
+
+  const rangeTitle = startOfWeek.toLocaleDateString(locale(), {month:"short", day:"numeric"}) + " – " +
+                     endOfWeek.toLocaleDateString(locale(), {month:"short", day:"numeric", year:"numeric"});
+
+  const cols = [];
+  for (let i = 0; i < 7; i++){
+    const day = new Date(startOfWeek.getFullYear(), startOfWeek.getMonth(), startOfWeek.getDate() + i);
+    const key = dkey(day);
+    const isToday = key === dkey(now);
+
+    const items = classesOn(day).map(c => ({
+      time: c.time,
+      title: c.id + " · " + c.name,
+      sub: (c.room || "").split(",")[0].trim(),
+      due: false
+    }))
+    .concat(
+      DB.tasks
+        .filter(t => hasDue(t) && (!t.done || S.role === "lecturer") && dkey(new Date(t.due)) === key)
+        .map(t => ({
+          time: hm(t.due),
+          title: tr("Due") + ": " + t.title,
+          sub: t.course,
+          due: true
+        }))
+    )
+    .sort((a, b) => a.time.localeCompare(b.time));
+
+    cols.push(h("div", {class:"wday" + (isToday ? " now" : "")},
+      h("div", {class:"wday-head"},
+        h("span", {class:"mute", style:"font-weight:500"}, DOW()[i]),
+        h("span", {class:"wday-num"}, String(day.getDate()))),
+      items.length
+        ? items.map(x => h("div", {class:"ev-item" + (x.due ? " due" : "")},
+            h("b", {}, x.time),
+            h("div", {class:"ev-course"}, x.title),
+            h("span", {}, x.sub)))
+        : h("p", {class:"mute", style:"font-size:.78rem;margin-top:.5rem"}, "No events")));
+  }
+
+  return [
+    help("This is your week-by-week calendar showing your classes and assignment deadlines. Use the arrows to switch weeks."),
+    h("div", {class:"card reveal"},
+      h("div", {class:"top"},
+        h("div", {style:"display:flex;gap:.4rem;align-items:center"},
+          iconBtn("Previous week", "M15 5l-7 7 7 7", () => { S.cal--; render(); }),
+          h("button", {class:"btn ghost", onclick:() => { S.cal = 0; render(); }}, "Today"),
+          iconBtn("Next week", "M9 5l7 7-7 7", () => { S.cal++; render(); })),
+        h("h2", {style:"margin:0"}, rangeTitle)),
+      h("div", {style:"overflow-x:auto"}, h("div", {class:"cal-week"}, cols)))
+  ];
+};
+
+/* ---------- Group calls ---------- */
+const CALL = {on:false, busy:false, stream:null, screen:null, ro:null, tick:0, recorder:null, recordingGroup:""};
+const IC = {
+  mic:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 14a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v5a3 3 0 0 0 3 3z"/><path d="M19 11a7 7 0 0 1-14 0M12 18v3M8 21h8"/></svg>',
+  micOff:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 9.3V6a3 3 0 0 0-5.9-.8M9 9v2a3 3 0 0 0 4.5 2.6"/><path d="M19 11a7 7 0 0 1-1.1 3.8M5 11a7 7 0 0 0 11 5.7M12 18v3M8 21h8M3 3l18 18"/></svg>',
+  cam:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="6" width="13" height="12" rx="2"/><path d="M15 10l7-4v12l-7-4"/></svg>',
+  camOff:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 10l7-4v12l-3-1.7M15 15v1a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5M3 3l18 18"/></svg>',
+  screen:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4M12 13V8M9.5 10.5L12 8l2.5 2.5"/></svg>',
+  end:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 14c5-5 13-5 18 0l-2.5 2.5-3-1.5v-3a11 11 0 0 0-7 0v3l-3 1.5z"/></svg>'
+};
+function stopScreen(say){
+  if (!CALL.screen) return;
+  const s = CALL.screen; CALL.screen = null;
+  s.getTracks().forEach(t => t.stop());
+  if (CALL.onScreen) CALL.onScreen(false);
+  if (say) toast("Screen sharing stopped.");
+}
+function createCallRecorder(stream, onState = () => {}, onComplete = () => {}, MediaRecorderCtor = window.MediaRecorder){
+  if (typeof MediaRecorderCtor !== "function") throw new Error("Recording is not supported in this browser.");
+  const hasVideo = !!(stream.getVideoTracks && stream.getVideoTracks().length);
+  const candidates = hasVideo
+    ? ["video/webm;codecs=vp9,opus", "video/webm;codecs=vp8,opus", "video/webm", "video/mp4"]
+    : ["audio/webm;codecs=opus", "audio/webm", "audio/mp4"];
+  const mimeType = candidates.find(type => typeof MediaRecorderCtor.isTypeSupported === "function" && MediaRecorderCtor.isTypeSupported(type));
+  const recorder = new MediaRecorderCtor(stream, mimeType ? {mimeType} : undefined);
+  let chunks = [], pending = null;
+  recorder.ondataavailable = e => { if (e.data && e.data.size) chunks.push(e.data); };
+  recorder.onerror = e => {
+    const error = e.error || new Error("Recording failed.");
+    const job = pending; pending = null; onState("error", error);
+    if (job) job.reject(error);
+  };
+  recorder.onstop = () => {
+    const type = recorder.mimeType || mimeType || (hasVideo ? "video/webm" : "audio/webm");
+    const blob = chunks.length ? new Blob(chunks, {type}) : null;
+    chunks = [];
+    const job = pending; pending = null; onState("idle");
+    if (job) job.resolve(blob);
+    if (blob){ try { onComplete(blob); } catch (error){ onState("error", error); } }
+  };
+  return {
+    get state(){ return recorder.state; },
+    start(){
+      if (recorder.state !== "inactive") return false;
+      chunks = []; pending = null;
+      recorder.start(1000); onState("recording"); return true;
+    },
+    stop(){
+      if (pending) return pending.promise;
+      if (recorder.state === "inactive") return Promise.resolve(null);
+      const promise = new Promise((resolve, reject) => { pending = {promise:null, resolve, reject}; });
+      pending.promise = promise;
+      onState("stopping");
+      try { recorder.stop(); }
+      catch (error){ const job = pending; pending = null; onState("error", error); return Promise.reject(error); }
+      return promise;
+    }
+  };
+}
+function saveCallRecording(blob, groupName){
+  if (!blob || !blob.size) return toast("No recording data was produced.");
+  const safeGroup = String(groupName || "call").replace(/[^a-z0-9_-]+/gi, "-").replace(/^-+|-+$/g, "") || "call";
+  const stamp = new Date().toISOString().replace(/[:.]/g, "-");
+  const ext = blob.type.includes("mp4") ? "mp4" : "webm";
+  const url = URL.createObjectURL(blob), link = document.createElement("a");
+  link.href = url; link.download = `uniplan-${safeGroup}-${stamp}.${ext}`;
+  document.body.appendChild(link); link.click(); link.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 30000);
+  toast("Recording downloaded to this device.");
+}
+function endCall(say){
+  if (CALL.recorder){
+    const recorder = CALL.recorder; CALL.recorder = null; CALL.recordingGroup = "";
+    try { recorder.stop().catch(() => {}); } catch (e) {}
+  }
+  if (CALL.stream) CALL.stream.getTracks().forEach(t => t.stop());
+  if (CALL.screen) CALL.screen.getTracks().forEach(t => t.stop());
+  if (CALL.ro) CALL.ro.disconnect();
+  clearInterval(CALL.tick); const el = document.getElementById("callpop"); if (el) el.remove();
+  const was = CALL.on; CALL.on = false; CALL.stream = null; CALL.screen = null; CALL.ro = null; CALL.onScreen = null; CALL.recorder = null; CALL.recordingGroup = "";
+  if (was && say) toast("Call ended.");
+}
+async function startCall(g, video){
+  if (CALL.busy) return;
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) return toast("Calls are not supported in this browser.");
+  endCall(); CALL.busy = true;
+  let stream = null, camOk = video;
+  try { stream = await navigator.mediaDevices.getUserMedia({audio:true, video}); }
+  catch (e) {
+    if (video){ try { stream = await navigator.mediaDevices.getUserMedia({audio:true}); camOk = false; toast("Camera unavailable. Joined with audio only."); } catch (e2) {} }
+  }
+  CALL.busy = false;
+  if (!stream) return toast("Could not access the microphone. Check browser permissions.");
+  if (!S.user){ stream.getTracks().forEach(t => t.stop()); return; }
+  CALL.on = true; CALL.stream = stream;
+  const hasVideo = camOk && stream.getVideoTracks().length > 0, since = Date.now();
+  const vid = h("video", {autoplay:"", playsinline:"", "aria-label":"Your camera"}); vid.muted = true; vid.srcObject = stream;
+  const av = h("div", {class:"call-av"}, S.user[0].toUpperCase()); av.hidden = hasVideo;
+  const clock = h("span", {class:"mute"}, "00:00");
+  const setBtn = (b, icon, text, cls) => { b.innerHTML = icon; b.append(h("span", {}, text)); b.classList.remove("is-off", "is-live"); if (cls) b.classList.add(cls); };
+
+  const micBadge = h("span", {class:"call-mic", role:"img"}); micBadge.innerHTML = IC.mic; micBadge.setAttribute("aria-label", tr("Microphone on"));
+  const mute = h("button", {class:"btn ghost", type:"button", "aria-pressed":"false"}); setBtn(mute, IC.mic, "Mute");
+  mute.addEventListener("click", () => {
+    const t = stream.getAudioTracks()[0]; if (!t) return;
+    t.enabled = !t.enabled; const muted = !t.enabled;
+    mute.setAttribute("aria-pressed", String(muted));
+    setBtn(mute, muted ? IC.micOff : IC.mic, muted ? "Unmute" : "Mute", muted ? "is-off" : "");
+    micBadge.className = "call-mic" + (muted ? " off" : ""); micBadge.innerHTML = muted ? IC.micOff : IC.mic;
+    micBadge.setAttribute("aria-label", tr(muted ? "Microphone muted" : "Microphone on"));
+  });
+  let cam = null;
+  if (hasVideo){
+    cam = h("button", {class:"btn ghost", type:"button", "aria-pressed":"false"}); setBtn(cam, IC.cam, "Camera off");
+    cam.addEventListener("click", () => {
+      const t = stream.getVideoTracks()[0]; if (!t) return;
+      t.enabled = !t.enabled; const off = !t.enabled; vid.hidden = off; av.hidden = !off;
+      cam.setAttribute("aria-pressed", String(off)); setBtn(cam, off ? IC.camOff : IC.cam, off ? "Camera on" : "Camera off", off ? "is-off" : "");
+    });
+  }
+  const selfTile = h("div", {class:"call-tile"}, vid, av, h("span", {class:"call-name"}, "You"), micBadge);
+
+  const scrVid = h("video", {autoplay:"", playsinline:"", "aria-label":"Shared screen"}); scrVid.muted = true;
+  const share = h("button", {class:"btn ghost", type:"button", "aria-pressed":"false"}); setBtn(share, IC.screen, "Share screen");
+  const scrTab = video ? h("button", {class:"btn ghost", type:"button", "aria-pressed":"false"}, "Shared screen") : null;
+  const scrTile = video ? null : h("div", {class:"call-tile scr"}, scrVid, h("span", {class:"call-name"}, "Shared screen"));
+  let showTab = () => {};
+  if (scrTile) scrTile.hidden = true;
+  CALL.onScreen = on => {
+    setBtn(share, IC.screen, on ? "Stop sharing" : "Share screen", on ? "is-live" : "");
+    share.setAttribute("aria-pressed", String(on));
+    if (!on) scrVid.srcObject = null;
+    if (scrTile) scrTile.hidden = !on;
+    if (scrTab){ scrTab.hidden = !on; showTab(on ? "scr" : "wb"); }
+  };
+  share.addEventListener("click", async () => {
+    if (CALL.screen) return stopScreen(true);
+    if (!navigator.mediaDevices.getDisplayMedia) return toast("Screen sharing is not supported in this browser.");
+    let scr;
+    try { scr = await navigator.mediaDevices.getDisplayMedia({video:true}); }
+    catch (e) { return toast("Screen sharing was cancelled or blocked."); }
+    if (!CALL.on || CALL.stream !== stream){ scr.getTracks().forEach(t => t.stop()); return; }
+    CALL.screen = scr; scrVid.srcObject = scr; CALL.onScreen(true);
+    scr.getVideoTracks()[0].addEventListener("ended", () => { if (CALL.screen === scr) stopScreen(true); });
+  });
+  if (scrTab) scrTab.hidden = true;
+
+  const recordStatus = h("span", {class:"tag red", role:"status"}, "Recording on this device"); recordStatus.hidden = true;
+  const recordBtn = h("button", {class:"btn ghost", type:"button", "aria-pressed":"false"}); setBtn(recordBtn, "⏺", "Record call");
+  let recorder = null;
+  const updateRecordingUI = state => {
+    if (state === "recording"){
+      recordBtn.disabled = false; recordBtn.setAttribute("aria-pressed", "true"); setBtn(recordBtn, "⏹", "Stop recording", "is-live"); recordStatus.hidden = false;
+    } else if (state === "stopping"){
+      recordBtn.disabled = true; setBtn(recordBtn, "…", "Saving recording", "is-live");
+    } else {
+      recordBtn.disabled = false; recordBtn.setAttribute("aria-pressed", "false"); setBtn(recordBtn, "⏺", "Record call"); recordStatus.hidden = true;
+    }
+    if ((state === "idle" || state === "error") && CALL.recorder === recorder){ CALL.recorder = null; CALL.recordingGroup = ""; }
+    if (state === "error") toast("Recording failed. Try again in a supported browser.");
+  };
+  recordBtn.addEventListener("click", () => {
+    if (CALL.recorder){ CALL.recorder.stop().catch(() => {}); return; }
+    if (typeof window.MediaRecorder !== "function") return toast("Recording is not supported in this browser.");
+    if (!window.confirm(tr("Start a local recording of your microphone/camera? This demo does not include other participants or screen sharing. Get everyone’s consent before recording any call."))) return;
+    try {
+      recorder = createCallRecorder(stream, updateRecordingUI, blob => saveCallRecording(blob, g.name));
+      CALL.recorder = recorder; CALL.recordingGroup = g.name;
+      if (!recorder.start()){ CALL.recorder = null; CALL.recordingGroup = ""; toast("Recording could not start."); }
+    } catch (e){ CALL.recorder = null; CALL.recordingGroup = ""; toast("Recording is not supported in this browser."); }
+  });
+  const ctl = h("div", {class:"call-ctl"}, mute, cam, share, recordBtn, recordStatus, h("button", {class:"btn end", type:"button", onclick:() => endCall(true)}));
+  const endBtn = ctl.lastChild; setBtn(endBtn, IC.end, "End call");
+  const title = h("div", {class:"top"}, h("h2", {}, (video ? "📹 " : "📞 ") + tr(video ? "Video call" : "Audio call")), clock);
+  const sub = h("p", {class:"mute"}, g.name + " · " + g.course);
+  const note = h("p", {class:"mute call-note"}, "Demo: other members cannot join without a call server. Recording saves only this device’s microphone/camera; screen sharing and other participants are not included.");
+  const el = h("div", {id:"callpop", role:"region", "aria-label":tr(video ? "Video call" : "Audio call") + " · " + g.name});
+
+  if (!video){
+    el.classList.add("big", "audio");
+    const aside = h("div", {class:"call-audio"}, selfTile, scrTile, note);
+    el.append(title, sub, h("div", {class:"call-body"}, aside), h("div", {style:"margin-top:.8rem"}, ctl));
+  } else {
+    el.classList.add("big");
+    const cv = h("canvas", {"aria-label":"Whiteboard"}), ctx = cv.getContext("2d");
+    const wrap = h("div", {class:"wb-wrap"}, cv);
+    let color = "#0f172a", size = 3, erase = false;
+    const swatches = ["#0f172a", "#2563eb", "#dc2626", "#16a34a"].map(c => { const b = h("button", {class:"wb-sw", type:"button", "aria-label":c, "aria-pressed":String(c === color), style:"background:" + c}); b.addEventListener("click", () => { color = c; erase = false; syncTools(); }); return b; });
+    const penB = h("button", {class:"btn ghost", type:"button"}, "Pen"), eraB = h("button", {class:"btn ghost", type:"button"}, "Eraser");
+    penB.addEventListener("click", () => { erase = false; syncTools(); }); eraB.addEventListener("click", () => { erase = true; syncTools(); });
+    const sz = h("input", {type:"range", min:"1", max:"24", value:"3", "aria-label":"Size"}); sz.addEventListener("input", () => { size = +sz.value; });
+    const clr = h("button", {class:"btn ghost", type:"button"}, "Clear"); clr.addEventListener("click", () => ctx.clearRect(0, 0, cv.width, cv.height));
+    const save = h("button", {class:"btn ghost", type:"button"}, "Save"); save.addEventListener("click", () => {
+      const o = document.createElement("canvas"); o.width = cv.width; o.height = cv.height; const c = o.getContext("2d"); c.fillStyle = "#fff"; c.fillRect(0, 0, o.width, o.height); c.drawImage(cv, 0, 0);
+      const a = document.createElement("a"); a.download = "whiteboard.png"; a.href = o.toDataURL("image/png"); a.click(); });
+    function syncTools(){ penB.setAttribute("aria-pressed", String(!erase)); eraB.setAttribute("aria-pressed", String(erase)); swatches.forEach(b => b.setAttribute("aria-pressed", String(!erase && b.getAttribute("aria-label") === color))); }
+    syncTools();
+    const bar = h("div", {class:"wb-bar"}, penB, eraB, swatches, sz, clr, save);
+    function fit(){
+      const r = wrap.getBoundingClientRect(); if (!r.width || !r.height) return;
+      const d = window.devicePixelRatio || 1, w = Math.round(r.width * d), hh = Math.round(r.height * d);
+      if (cv.width === w && cv.height === hh) return;
+      const snap = document.createElement("canvas"); snap.width = cv.width; snap.height = cv.height;
+      if (cv.width && cv.height) snap.getContext("2d").drawImage(cv, 0, 0);
+      cv.width = w; cv.height = hh; ctx.lineCap = ctx.lineJoin = "round"; ctx.drawImage(snap, 0, 0);
+    }
+    CALL.ro = new ResizeObserver(fit); CALL.ro.observe(wrap);
+    let last = null;
+    const pt = e => { const r = cv.getBoundingClientRect(); return [(e.clientX - r.left) * cv.width / r.width, (e.clientY - r.top) * cv.height / r.height]; };
+    const seg = (a, b) => { const d = window.devicePixelRatio || 1; ctx.globalCompositeOperation = erase ? "destination-out" : "source-over"; ctx.strokeStyle = color; ctx.lineWidth = (erase ? size * 4 : size) * d; ctx.beginPath(); ctx.moveTo(a[0], a[1]); ctx.lineTo(b[0], b[1]); ctx.stroke(); };
+    cv.addEventListener("pointerdown", e => { e.preventDefault(); cv.setPointerCapture(e.pointerId); last = pt(e); seg(last, [last[0] + .01, last[1]]); });
+    cv.addEventListener("pointermove", e => { if (!last) return; const p = pt(e); seg(last, p); last = p; });
+    const up = () => { last = null; }; cv.addEventListener("pointerup", up); cv.addEventListener("pointercancel", up);
+    const wbPane = h("div", {class:"wb-pane"}, bar, wrap);
+    const scrPane = h("div", {class:"scr-pane"}, scrVid); scrPane.hidden = true;
+    const wbTab = h("button", {class:"btn ghost", type:"button", "aria-pressed":"true"}, "Whiteboard");
+    showTab = which => { const scr = which === "scr"; wbPane.hidden = scr; scrPane.hidden = !scr; wbTab.setAttribute("aria-pressed", String(!scr)); scrTab.setAttribute("aria-pressed", String(scr)); if (!scr) requestAnimationFrame(fit); };
+    wbTab.addEventListener("click", () => showTab("wb")); scrTab.addEventListener("click", () => showTab("scr"));
+    const stage = h("div", {class:"call-stage"}, h("div", {class:"call-tabs"}, wbTab, scrTab), wbPane, scrPane);
+    const side = h("div", {class:"call-side"}, selfTile, note);
+    el.append(title, sub, h("div", {class:"call-body"}, stage, side), h("div", {style:"margin-top:.8rem"}, ctl));
+  }
+  document.body.appendChild(el);
+  CALL.tick = setInterval(() => { const s = Math.floor((Date.now() - since) / 1000); clock.textContent = pad2(Math.floor(s / 60)) + ":" + pad2(s % 60); }, 1000);
+  stream.getTracks()[0].addEventListener("ended", () => { if (CALL.stream === stream) endCall(true); });
+}
+addEventListener("pagehide", () => endCall());
+
+function render(){
+  const root = document.getElementById("root");
+  if (!S.user){
+    endCall(); dismissAlerts(); sent.clear();
+    root.replaceChildren(authView());
+    return;
+  }
+  notify();
+  let p = PAGES.includes(location.hash.slice(1)) ? location.hash.slice(1) : "dashboard";
+  if (S.role !== "student" && p === "groups") p = "dashboard";
+  const st = S.role === "student";
+
+  const navLink = (x, ico, name, badge) => h("a", {
+    href:"#" + x,
+    class:x === p ? "on" : "",
+    "aria-current":x === p ? "page" : "false"
+  }, name, badge ? h("span", {class:"badge"}, String(badge)) : null);
+
+  const navToggle = h("button", {class:"nav-toggle", type:"button", "aria-label":"Menu", "aria-expanded":String(!!S.navOpen), "aria-controls":"nav-menu", onclick:() => setNav(!S.navOpen)});
+  navToggle.innerHTML = '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>';
+  const floatingNav = h("header", {id:"floating-nav", class:"float-nav-wrap" + (S.navOpen ? " open" : "")},
+    h("nav", {class:"float-nav", "aria-label":"Primary Navigation"},
+      h("a", {href:"#dashboard", class:"nav-brand"}, "🎓 UniPlan"),
+      navToggle,
+      h("div", {class:"nav-links", id:"nav-menu", onclick:e => { if (e.target.closest("a")) setNav(false); }},
+        NAV.filter(x => st || x[0] !== "groups").map(([x, ico, name]) => navLink(x, ico, name))
+      ),
+      h("div", {class:"nav-actions"},
+        langBtn(),
+        h("a", {href:"#profile", class:"avatar", "aria-label":"Profile", title:S.user}, S.user[0].toUpperCase()),
+        h("button", {class:"lo-btn", type:"button", onclick:() => { S.user = null; S.editingName = false; S.tab = "login"; location.hash = ""; render(); }}, "Log out")
+      )
+    )
+  );
+
+  const title = (NAV.find(x => x[0] === p) || [0, 0, label(p)])[2];
+  const head = p === "dashboard"
+    ? h("div", {class:"head"},
+        h("div", {},
+          h("h1", {}, "Dashboard"),
+          h("p", {class:"mute"}, greet() + " " + tr("Here’s what’s happening today."))),
+        h("div", {style:"display:flex;gap:.6rem;flex-wrap:wrap"},
+          h("a", {href:"#assignments", class:"btn pill out"}, st ? "Find assignments" : "Assign homework"),
+          h("a", {href:"#calendar", class:"btn pill out"}, "View calendar")))
+    : h("div", {class:"head"}, h("h1", {}, title));
+
+  const mainStage = h("div", {id:"app"},
+    h("main", {class:"page-enter"}, head, pages[p]())
+  );
+
+  root.replaceChildren(...[floatingNav, mainStage, boardPopup()].filter(Boolean));
+  showFloatingNav();
+  resetNavIdle();
+  initEffects();
+}
+
+function setNav(open){
+  S.navOpen = open;
+  const w = document.getElementById("floating-nav");
+  if (!w) return;
+  w.classList.toggle("open", open);
+  const b = w.querySelector(".nav-toggle");
+  if (b) b.setAttribute("aria-expanded", String(open));
+}
+document.addEventListener("click", e => { if (S.navOpen && !e.target.closest("#floating-nav")) setNav(false); });
+window.addEventListener("keydown", e => { if (e.key === "Escape" && S.navOpen){ setNav(false); const b = document.querySelector(".nav-toggle"); if (b) b.focus(); } });
+window.addEventListener("resize", () => { if (S.navOpen && window.innerWidth > 760) setNav(false); });
+window.addEventListener("hashchange", () => {
+  S.navOpen = false;
+  window.scrollTo({top:0, behavior:"smooth"});
+  render();
+});
+setInterval(() => {
+  const a = document.activeElement;
+  if (S.user && !(a && /^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName))) render();
+}, 60000);
+render();
+</script>
+</body>
+</html>
